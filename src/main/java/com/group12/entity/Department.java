@@ -2,7 +2,7 @@ package com.group12.entity;
 
 public class Department {
 
-    private int depid;
+    private String depid;
     private String depName;
 
     private Department(Builder builder) {
@@ -14,7 +14,7 @@ public class Department {
         return depName;
     }
 
-    public int getDepid() {
+    public String getDepid() {
         return depid;
     }
 
@@ -22,13 +22,13 @@ public class Department {
 
     public static class Builder {
 
-        private int depid;
+        private String depid;
         private String depName;
 
 
 
 
-        public Builder setDepid(int depid) {
+        public Builder setDepid(String depid) {
             this.depid = depid;
             return this;
         }
