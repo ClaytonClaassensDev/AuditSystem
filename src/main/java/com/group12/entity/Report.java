@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class Report
 {
-    private int reportId;
+    private String reportId;
     private String reportAuth;
     private LocalDate reportDate;
 
@@ -21,7 +21,7 @@ public class Report
         this.reportDate = builder.reportDate;
     }
 
-    public int getReportId() {
+    public String getReportId() {
         return reportId;
     }
 
@@ -36,7 +36,7 @@ public class Report
     @Override
     public String toString() {
         return "Report{" +
-                "reportId=" + reportId +
+                "reportID=" + reportId +
                 ", reportAuth='" + reportAuth + '\'' +
                 ", reportDate=" + reportDate +
                 '}';
@@ -44,11 +44,11 @@ public class Report
 
     public static class Builder
     {
-        private int reportId;
+        private String reportId;
         private String reportAuth;
         private LocalDate reportDate;
 
-        public Builder setReportId(int reportId)
+        public Builder setReportId(String reportId)
         {
             this.reportId = reportId;
             return this;
