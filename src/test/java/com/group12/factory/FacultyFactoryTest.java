@@ -1,7 +1,6 @@
 package com.group12.factory;
 
 import com.group12.entity.Faculty;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
