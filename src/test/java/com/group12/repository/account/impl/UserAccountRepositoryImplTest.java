@@ -1,4 +1,4 @@
-package com.group12.repository;
+package com.group12.repository.account.impl;
 
 import com.group12.factory.UserAccountFactory;
 import com.group12.repository.account.UserAccountRepository;
