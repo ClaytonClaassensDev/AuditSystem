@@ -16,19 +16,19 @@ public class ReportFactoryTest {
 
     @Test
     public void createReport() {
-        Report report = ReportFactory.createReport("Brian Finch", java.time.LocalDate.now());
+        Report report = ReportFactory.createReport("Brian Finch");
         Assert.assertNotNull(report.getReportId());
     }
 
     @Test
     public void reportDate(){
-        Report report = ReportFactory.createReport("Brian Finch", java.time.LocalDate.now());
+        Report report = ReportFactory.createReport("Brian Finch");
         Assert.assertEquals(java.time.LocalDate.now(), report.getReportDate());
     }
 
     @Test
     public void reportAuthor() {
-        Report report = ReportFactory.createReport("Brian Finch", java.time.LocalDate.now());
+        Report report = ReportFactory.createReport("Brian Finch");
         Assert.assertEquals("Brian Finch", report.getReportAuth());
     }
 }
