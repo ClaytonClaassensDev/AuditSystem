@@ -21,6 +21,10 @@ public class DepartmentFactoryTest {
 
 
           Department department = DepartmentFactory.createDepartment("Informatics and Design");
+
+
+
+
       }
       catch (Exception ex)
       {
