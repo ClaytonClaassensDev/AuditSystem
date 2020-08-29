@@ -10,66 +10,66 @@ import java.time.LocalDate;
 
 public class Login
 {
-    private LocalDate loginDate;
-    private LocalDate logoutDate;
-    private boolean loginStatus;
+    private String loginID;
+    private String emailAddress;
+    private String password;
 
     private Login(Builder builder)
     {
-        this.loginDate = builder.loginDate;
-        this.logoutDate = builder.logoutDate;
-        this.loginStatus = builder.loginStatus;
+        this.loginID = builder.loginID;
+        this.emailAddress = builder.emailAddress;
+        this.password = builder.password;
     }
 
-    public LocalDate getLoginDate() {
-        return loginDate;
+    public String getLoginID() {
+        return loginID;
     }
 
-    public LocalDate getLogoutDate() {
-        return logoutDate;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public boolean isLoginStatus() {
-        return loginStatus;
+    public String getPassword() {
+        return password;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Login{" +
-                "loginDate=" + loginDate +
-                ", logoutDate=" + logoutDate +
-                ", loginStatus=" + loginStatus +
+                "loginID='" + loginID + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 
     public static class Builder
     {
-        private LocalDate loginDate;
-        private LocalDate logoutDate;
-        private boolean loginStatus;
+        private String loginID;
+        private String emailAddress;
+        private String password;
 
-        public Builder setLoginDate(LocalDate loginDate)
+        public Builder setLoginID(String loginID)
         {
-            this.loginDate = loginDate;
+            this.loginID = loginID;
             return this;
         }
-        public Builder setLogoutDate(LocalDate logoutDate)
+
+        public Builder setEmailAddress(String emailAddress)
         {
-            this.logoutDate = logoutDate;
+            this.emailAddress = emailAddress;
             return this;
         }
-        public Builder setLoginStatus(boolean loginStatus)
+        public Builder setPassword(String password)
         {
-            this.loginStatus = loginStatus;
+            this.password = password;
             return this;
         }
 
         public Builder copy(Login login)
         {
-            this.loginDate = login.loginDate;
-            this.logoutDate = login.logoutDate;
-            this.loginStatus = login.loginStatus;
+            this.loginID = login.loginID;
+            this.emailAddress = login.emailAddress;
+            this.password = login.password;
             return this;
         }
 
