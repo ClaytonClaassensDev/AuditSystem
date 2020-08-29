@@ -5,7 +5,7 @@ package com.group12.repository;
 /**  Author: Rachael Klein
  *   Student no: 218 057 377
  *   Date: 25-08-2020
- *   Description: An Implementation of an Interface UserAccount Respository
+ *   Description: An Implementation of a general Interface Respository
  */
 
 //EntityType is the type
