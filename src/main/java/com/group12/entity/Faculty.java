@@ -31,7 +31,7 @@ public class Faculty {
     public String toString() {
         return "Faculty{" +
                 "facultyId='" + facultyId + '\'' +
-                ", facultyN:wqame='" + facultyName + '\'' +
+                ", facultyName='" + facultyName + '\'' +
                 '}';
     }
 
