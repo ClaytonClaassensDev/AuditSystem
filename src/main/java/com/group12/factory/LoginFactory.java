@@ -1,6 +1,7 @@
 package com.group12.factory;
 
 import com.group12.entity.Login;
+import com.group12.util.GenerateID;
 
 import java.time.LocalDate;
 
@@ -12,12 +13,13 @@ import java.time.LocalDate;
 
 public class LoginFactory
 {
-    public static Login createLogin(LocalDate loginDate, LocalDate logoutDate, boolean loginStatus)
+    public static Login createLogin(String emailAddress, String password)
     {
+        String loginID = GenerateID.generateID();
         return new Login.Builder()
-                .setLoginDate(loginDate)
-                .setLogoutDate(logoutDate)
-                .setLoginStatus(loginStatus)
+                .setLoginID(loginID)
+                .setEmailAddress(emailAddress)
+                .setPassword(password)
                 .build();
     }
 }
