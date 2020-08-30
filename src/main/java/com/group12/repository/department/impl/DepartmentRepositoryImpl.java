@@ -18,6 +18,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         this.departmentDB = new HashSet<>();
     }
 
+    //Returns the repository you want to work on
     public static DepartmentRepository getRepository()
     {
         if (repository == null) repository = new com.group12.repository.department.impl.DepartmentRepositoryImpl();
