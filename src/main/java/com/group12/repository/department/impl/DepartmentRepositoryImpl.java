@@ -8,6 +8,12 @@ import com.group12.repository.department.DepartmentRepository;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Enver Human - 216174929
+ * Desc: Repository Implementation class for department
+ * Date: 28 August 2020
+ */
+
 public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     public static DepartmentRepository repository = null;
