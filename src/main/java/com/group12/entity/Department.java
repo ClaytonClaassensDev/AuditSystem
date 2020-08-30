@@ -6,8 +6,8 @@ public class Department {
     private String depName;
 
     private Department(Builder builder) {
-        this.depid = depid;
-        this.depName = depName;
+        this.depid = builder.depid;
+        this.depName = builder.depName;
     }
 
     public String getDepName() {
