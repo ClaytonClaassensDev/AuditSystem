@@ -8,6 +8,12 @@ import com.group12.repository.department.DepartmentRepository;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Enver Human - 216174929
+ * Desc: Repository Implementation class for department
+ * Date: 28 August 2020
+ */
+
 public class DepartmentRepositoryImpl implements DepartmentRepository {
 
     public static DepartmentRepository repository = null;
@@ -18,13 +24,14 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         this.departmentDB = new HashSet<>();
     }
 
+    //Returns the repository you want to work on
     public static DepartmentRepository getRepository()
     {
         if (repository == null) repository = new com.group12.repository.department.impl.DepartmentRepositoryImpl();
         return repository;
     }
 
-
+    //This method creates a Department object it and gets added to the repository
     @Override
     public Department create(Department department)
     {
@@ -32,7 +39,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         return department;
     }
 
-
+    //This method finds by id and deletes department object from repository
     @Override
     public Department read(String id)
     {
@@ -42,7 +49,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         return department;
     }
 
-
+    //This method finds a department object ,deletes the old , adds and returns the newly modified one
     @Override
     public Department update(Department department)
     {
@@ -55,7 +62,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         return null;
     }
 
-
+    //This method finds by id and deletes department object from repository
     @Override
     public boolean delete(String id)
     {
@@ -68,7 +75,7 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         return false;
     }
 
-
+   // This method returns all department objects from the repository
     @Override
     public Set<Department> getAll()
     {

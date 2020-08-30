@@ -5,6 +5,12 @@ import com.group12.repository.IRepository;
 
 import java.util.Set;
 
+/**
+ * @author Enver Human - 216174929
+ * Desc: Repository Interface for department
+ * Date: 28 August 2020
+ */
+
 
 public interface DepartmentRepository extends IRepository<Department, String> {
 
