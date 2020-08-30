@@ -1,6 +1,7 @@
 package com.group12.factory;
 
 import com.group12.entity.Report;
+import com.group12.util.GenerateDate;
 import com.group12.util.GenerateID;
 
 import java.time.LocalDate;
@@ -13,13 +14,14 @@ import java.time.LocalDate;
 
 public class ReportFactory
 {
-    public static Report createReport(String reportAuth, LocalDate reportDate)
+    public static Report createReport(String reportAuth)
     {
         String reportId = GenerateID.generateID();
+        LocalDate date = GenerateDate.generateDate();
         return new Report.Builder()
                 .setReportId(reportId)
                 .setReportAuth(reportAuth)
-                .setReportDate(reportDate)
+                .setReportDate(date)
                 .build();
     }
 }
