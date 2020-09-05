@@ -24,42 +24,50 @@ public class LoginServiceImpl implements LoginService
         this.repository = LoginRepositoryImpl.getRepository();
     }
 
+    // This method uses the Singleton pattern to instantiate only one object
     public static LoginService getService()
     {
         if (service == null) service = new LoginServiceImpl();
         return service;
     }
 
+    // This method calls the create method in the LoginRepository class and adds a new login object
     @Override
     public Login create(Login login)
     {
         return this.repository.create(login);
     }
 
+    // This method calls the read method in the LoginRepository class and searches for the specified login object
     @Override
     public Login read(String id)
     {
         return this.repository.read(id);
     }
 
+    // This method calls the update method in the LoginRepository class and changes the details of a login object
     @Override
     public Login update(Login login)
     {
         return this.repository.update(login);
     }
 
+    // This method calls the delete method in the LoginRepository class and deletes the specified login object
     @Override
     public boolean delete(String id)
     {
         return this.repository.delete(id);
     }
 
+    // This method retrieves all login objects in the repository
     @Override
     public Set<Login> getAll()
     {
         return this.repository.getAll();
     }
 
+    // This method checks the email and password used to login against the email and password of users
+    // If the login email and password matches the email and password of a user, that user is authenticated
     @Override
     public boolean authenticate(String loginID, UserAccount userAccount)
     {

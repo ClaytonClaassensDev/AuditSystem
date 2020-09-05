@@ -22,36 +22,42 @@ public class ReportServiceImpl implements ReportService
         this.repository = ReportRepositoryImpl.getRepository();
     }
 
+    // This method uses the Singleton pattern to instantiate only one object
     public static ReportService getService()
     {
         if (service == null) service = new ReportServiceImpl();
         return service;
     }
 
+    // This method calls the create method in the ReportRepository class and adds a new report object
     @Override
     public Report create(Report report)
     {
         return this.repository.create(report);
     }
 
+    // This method calls the read method in the ReportRepository class and searches for the specified report
     @Override
     public Report read(String id)
     {
         return this.repository.read(id);
     }
 
+    // This method calls the update method in the ReportRepository class and changes the details of the specified report
     @Override
     public Report update(Report report)
     {
         return this.repository.update(report);
     }
 
+    // This method calls the delete method in the ReportRepository class and deletes the specified report object
     @Override
     public boolean delete(String id)
     {
         return this.repository.delete(id);
     }
 
+    // This method retrieves all the report objects in the repository
     @Override
     public Set<Report> getAll()
     {
