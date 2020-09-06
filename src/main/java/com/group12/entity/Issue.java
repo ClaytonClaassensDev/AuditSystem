@@ -6,15 +6,18 @@ import java.time.LocalDateTime;
  * @author: Clayton Claassens
  * @desc: entity.Issue Entity --> Builder Pattern
  */
+
+//NOTE!! issueStatus = open when true || issueStatus = false when closed
 public class Issue{
 
     private final String issueID;
     private final LocalDateTime issueRaisedDate;
     private String issueArea;
-    private String issueStatus;
+    private boolean issueStatus = true;//true = open
+    private boolean isResolved = false;
+    private boolean isValidated = false;
     private final String issueDescription;
-    private LocalDateTime issueResolvedDate;
-    private boolean isResolved;
+    private LocalDateTime issueResolvedDate;//This date should be set once an Issue is resolved
 
     private Issue(Builder builder){
 
@@ -22,6 +25,8 @@ public class Issue{
         this.issueRaisedDate = builder.issueRaisedDate;
         this.issueArea = builder.issueArea;
         this.issueDescription = builder.issueDescription;
+        this.isResolved = builder.isResolved;
+        this.isValidated = builder.isValidated;
         this.issueStatus = builder.issueStatus;
     }
 
@@ -45,11 +50,17 @@ public class Issue{
         return issueResolvedDate;
     }
 
-    public String getIssueStatus() {
+    public boolean getIssueStatus() {
         return issueStatus;
     }
 
-    public boolean isResolved() {
+    public boolean getIsValidated(){
+
+        return isValidated;
+    }
+
+    public boolean getIsResolved(){
+
         return isResolved;
     }
 
@@ -59,13 +70,13 @@ public class Issue{
                 "issueID='" + issueID + '\'' +
                 ", issueRaisedDate=" + issueRaisedDate +
                 ", issueArea='" + issueArea + '\'' +
-                ", issueStatus='" + issueStatus + '\'' +
+                ", issueStatus=" + issueStatus +
+                ", isResolved=" + isResolved +
+                ", isValidated=" + isValidated +
                 ", issueDescription='" + issueDescription + '\'' +
                 ", issueResolvedDate=" + issueResolvedDate +
-                ", isResolved=" + isResolved +
                 '}';
     }
-
 
     public static class Builder {
 
@@ -74,8 +85,9 @@ public class Issue{
         private LocalDateTime issueResolvedDate;
         private String issueArea;
         private String issueDescription;
-        private String issueStatus;
+        private boolean issueStatus;
         private boolean isResolved;
+        private boolean isValidated;
 
 
         public Builder setIssueID(String issueID) {
@@ -108,16 +120,24 @@ public class Issue{
             return this;
         }
 
-        public Builder setIssueStatus(String issueStatus) {
+        public Builder setIssueStatus(boolean issueStatus) {
 
             this.issueStatus = issueStatus;
             return this;
         }
 
-        public Builder setResolved(boolean resolved) {
-            isResolved = resolved;
+        public Builder setIsResolved(boolean isResolved){
+
+            this.isResolved = isResolved;
             return this;
         }
+
+        public Builder setIsValidated(boolean isValidated){
+
+            this.isValidated = isValidated;
+            return this;
+        }
+
 
         public Builder copy(Issue issue)
         {
@@ -126,6 +146,8 @@ public class Issue{
             this.issueArea = issue.issueArea;
             this.issueDescription = issue.issueDescription;
             this.issueStatus = issue.issueStatus;
+            this.isResolved = issue.isResolved;
+            this.isValidated = issue.isValidated;
             return this;
         }
         
