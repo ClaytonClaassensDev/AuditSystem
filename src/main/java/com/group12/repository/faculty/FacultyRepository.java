@@ -11,7 +11,7 @@ import java.util.Set;
  * Date: July 2020
  */
 
-public interface IFacultyRepository extends IRepository<Faculty, String> {
+public interface FacultyRepository extends IRepository<Faculty, String> {
 
     public Set<Faculty> getAllFaculties();
 

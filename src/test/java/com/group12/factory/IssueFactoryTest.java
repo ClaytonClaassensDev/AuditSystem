@@ -12,7 +12,7 @@ public class IssueFactoryTest {
     @Test
     public void assertIssueID_IssueRaisedDate_NotNull() {
 
-        issueDummy1 = IssueFactory.createIssue("","","");
+        issueDummy1 = IssueFactory.createIssue("","");
 
         Assert.assertNotNull(issueDummy1.getIssueID());
         Assert.assertNotNull(issueDummy1.getIssueRaisedDate());
@@ -22,8 +22,8 @@ public class IssueFactoryTest {
     @Test
     public void assertIssueID_Unique(){
 
-        issueDummy1 = IssueFactory.createIssue("Health", "Expired cafeteria food", "HIGH");
-        issueDummy2 = IssueFactory.createIssue("Safety","Broken toilet mirrors","HIGH");
+        issueDummy1 = IssueFactory.createIssue("Health", "Expired cafeteria food");
+        issueDummy2 = IssueFactory.createIssue("Safety","Broken toilet mirrors");
 
         Assert.assertNotEquals(issueDummy1.getIssueID(), issueDummy2.getIssueID());
     }

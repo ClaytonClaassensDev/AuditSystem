@@ -18,12 +18,12 @@ public class IssueRepositoryImplTest{
     private static IssueRepository issueDB = IssueRepositoryImpl.getIssueRepositoryInstance();
     private static Set<Issue> issueSet = null;
 
-    Issue issueExpected = IssueFactory.createIssue("Safety", "Out of Order Fire Escapes", "Open");
-    Issue issue1 = IssueFactory.createIssue("Safety", "Broken Entrance Doors", "Open");
-    Issue issue2 = IssueFactory.createIssue("Health", "Expired cafeteria food", "Open");
-    Issue issue3 = IssueFactory.createIssue("Academics", "Outdated learning material", "Open");
-    Issue issue4 = IssueFactory.createIssue("Safety", "Broken Mirrors and Windows", "Open");
-    Issue issue5 = IssueFactory.createIssue("Health", "Campus Clinic Sanitation", "Open");
+    Issue issueExpected = IssueFactory.createIssue("Safety", "Out of Order Fire Escapes");
+    Issue issue1 = IssueFactory.createIssue("Safety", "Broken Entrance Doors");
+    Issue issue2 = IssueFactory.createIssue("Health", "Expired cafeteria food");
+    Issue issue3 = IssueFactory.createIssue("Academics", "Outdated learning material");
+    Issue issue4 = IssueFactory.createIssue("Safety", "Broken Mirrors and Windows");
+    Issue issue5 = IssueFactory.createIssue("Health", "Campus Clinic Sanitation");
 
 
     @Test

@@ -1,7 +1,7 @@
 package com.group12.repository.faculty.impl;
 
 import com.group12.entity.Faculty;
-import com.group12.repository.faculty.IFacultyRepository;
+import com.group12.repository.faculty.FacultyRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,9 +12,9 @@ import java.util.Set;
  * Date: July 2020
  */
 
-public class FacultyRepositoryImpl implements IFacultyRepository {
+public class FacultyRepositoryImpl implements FacultyRepository {
 
-    private static FacultyRepositoryImpl instance = null;
+    private static FacultyRepositoryImpl repository = null;
 
     private Set<Faculty> facultyDB = null;
 
@@ -22,16 +22,21 @@ public class FacultyRepositoryImpl implements IFacultyRepository {
         this.facultyDB = new HashSet<>();
     }
 
-    public static FacultyRepositoryImpl getInstance(){
-        if(instance == null){
-            instance = new FacultyRepositoryImpl();
+    public static FacultyRepositoryImpl getRepository(){
+        if(repository == null){
+            repository = new FacultyRepositoryImpl();
         }
-        return instance;
+        return repository;
     }
 
 
     @Override
     public Faculty create(Faculty faculty) {
+        for (Faculty fac : this.facultyDB){
+            if(fac.getFacultyName().equalsIgnoreCase(faculty.getFacultyName())){
+                return null;
+            }
+        }
         this.facultyDB.add(faculty);
         return faculty;
     }
