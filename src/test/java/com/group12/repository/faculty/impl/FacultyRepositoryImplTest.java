@@ -2,8 +2,7 @@ package com.group12.repository.faculty.impl;
 
 import com.group12.entity.Faculty;
 import com.group12.factory.FacultyFactory;
-import com.group12.repository.faculty.IFacultyRepository;
-import com.group12.repository.faculty.impl.FacultyRepositoryImpl;
+import com.group12.repository.faculty.FacultyRepository;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -20,7 +19,7 @@ import java.util.Set;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacultyRepositoryImplTest {
 
-    private static IFacultyRepository repo = FacultyRepositoryImpl.getInstance();
+    private static FacultyRepository repo = FacultyRepositoryImpl.getRepository();
 
     // Instances to test with
     private static Faculty engineering = null;
