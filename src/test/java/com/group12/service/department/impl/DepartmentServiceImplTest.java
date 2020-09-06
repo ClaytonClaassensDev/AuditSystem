@@ -9,6 +9,14 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 
+/**
+ * @author Enver Human - 216174929
+ * Desc: Testing of depmartment service implementation
+ * Date: 06 September 2020
+ *
+ */
+
+
 import java.util.Set;
 
 import static org.junit.Assert.*;

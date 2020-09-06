@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * @author Enver Human - 216174929
  * Desc: Service Implementation for Department
- * Date: 28 August 2020
+ * Date: 06 September 2020
  */
 public class DepartmentServiceImpl implements DepartmentService
 {
@@ -22,35 +22,35 @@ public class DepartmentServiceImpl implements DepartmentService
         this.repository = DepartmentRepositoryImpl.getRepository();
     }
 
-    // This method uses the Singleton pattern to instantiate only one object
+
     public static DepartmentService getService()
     {
         if (service == null) service = new DepartmentServiceImpl();
         return service;
     }
 
-    // This method calls the create method in the DepartmentRepository class and adds a new department object
+    // This method returns a department object using department repository
     @Override
     public Department create(Department department)
     {
         return this.repository.create(department);
     }
 
-    // This method calls the read method in the DepartmentRepository class and searches for the specified department
+    // This method searches for the specified department object using id
     @Override
     public Department read(String id)
     {
         return this.repository.read(id);
     }
 
-    // This method calls the update method in the DepartmentRepository class and changes the details of the specified department
+    // This method changes and updates specific department object
     @Override
     public Department update(Department department)
     {
         return this.repository.update(department);
     }
 
-    // This method calls the delete method in the DepartmentRepository class and deletes the specified department object
+    // This method deletes a department object in repository using id
     @Override
     public boolean delete(String id)
     {
