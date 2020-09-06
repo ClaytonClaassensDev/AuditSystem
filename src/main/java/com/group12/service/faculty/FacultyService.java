@@ -21,16 +21,16 @@ public interface FacultyService extends IService<Faculty, String> {
 
     /**
      * Returns a faculty with the given name
-     * @param name
-     * @return Faculty instance
+     * @param name The name of the faculty to return
+     * @return Returns a Faculty instance
      */
     Faculty getFacultyByName(String name);
 
 
     /**
      * Returns all the faculties that starts with the given string
-     * @param start
-     * @return Set of Faculties
+     * @param start The string that the faculties starts with
+     * @return Returns a Set of Faculties
      */
     Set<Faculty> getAllFacultyStartingWith(String start);
 

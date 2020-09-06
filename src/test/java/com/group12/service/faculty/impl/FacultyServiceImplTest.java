@@ -88,14 +88,40 @@ public class FacultyServiceImplTest{
 
     @Test
     public void e_testRead() {
+        System.out.println("READ FACULTY");
+
+        String endID = engineering.getFacultyId();
+        Faculty read = service.read(endID);
+
+        System.out.println(read.toString());
+        Assert.assertEquals(engineering, read);
+        System.out.println("");
     }
 
     @Test
     public void f_testUpdate() {
+        System.out.println("UPDATE");
+
+        Faculty finAccounting = new Faculty
+                .Builder()
+                .copy(accounting)
+                .setFacultyName("Financial Accounting")
+                .build();
+
+        System.out.println(finAccounting.toString());
+        Assert.assertEquals(finAccounting, service.update(finAccounting));
+        System.out.println("");
     }
 
     @Test
     public void g_testDelete() {
+        System.out.println("DELETE");
+        String engID = engineering.getFacultyId();
+
+        boolean deleted = service.delete(engID);
+        System.out.println("DELETED: " + deleted);
+
+        Assert.assertTrue(deleted);
     }
 
 }

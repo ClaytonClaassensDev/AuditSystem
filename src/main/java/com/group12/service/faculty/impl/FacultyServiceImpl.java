@@ -80,7 +80,7 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty update(Faculty faculty) {
-        return this.update(faculty);
+        return this.repository.update(faculty);
     }
 
     @Override
