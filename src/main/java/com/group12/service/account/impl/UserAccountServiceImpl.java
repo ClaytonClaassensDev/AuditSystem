@@ -11,12 +11,17 @@ import com.group12.factory.UserAccountFactory;
 import com.group12.repository.account.UserAccountRepository;
 import com.group12.repository.account.impl.UserAccountRepositoryImpl;
 import com.group12.service.account.UserAccountService;
+import org.springframework.stereotype.Service;
+
 import java.util.Set;
 import java.time.LocalDate;
 
 // this service will not have access to the database, it will link to my repository
 // this service is a layer that gives you access to the repository
 // this service class is used to call the operations that i need
+
+//Service - telling Spring framework that this is a service that i am trying to expose
+@Service
 public class UserAccountServiceImpl implements UserAccountService {
 
     // the service here exposes a static service
