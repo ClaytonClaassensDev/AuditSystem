@@ -22,9 +22,9 @@ import static org.junit.Assert.*;
 public class TicketRepositoryImplTest {
 
     private static TicketRepository repository = TicketRepositoryImpl.getRepository();//
-    private static Issue issue = IssueFactory.createIssue("Health","First aid kits need replacing","Unsolved");
+    private static Issue issue = IssueFactory.createIssue("Health","First aid kits need replacing");
     private static Ticket ticket = TicketFactory.createTicket(issue);
-    private static Issue newIss = IssueFactory.createIssue("Health","First aid kits need replacing","Resolved");
+    private static Issue newIss = IssueFactory.createIssue("Health","First aid kits need replacing");
 
    //This checks if the ticketId of the ticket created is the same as the one parsed into the method
     @Test

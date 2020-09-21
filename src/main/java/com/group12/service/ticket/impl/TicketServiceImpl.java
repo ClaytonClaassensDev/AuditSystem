@@ -37,9 +37,9 @@ public class TicketServiceImpl implements TicketService {
     //Business Logic 1: When you want close a ticket when the issue has been resolved
     public boolean closeTicket(Issue iss, Ticket ticket){
         boolean ticketClose = false;
-        Issue issSolved = new Issue.Builder().copy(iss).setIssueStatus("Resolved").build();
+        Issue issSolved = new Issue.Builder().copy(iss).setIssueStatus(true).build();
         Ticket tcktSolved;
-        if(!(iss.getIssueStatus().equalsIgnoreCase("Resolved"))){
+        if(!(iss.getIssueStatus())){
             tcktSolved = new Ticket.Builder().copy(ticket).setTicketIssue(issSolved).build();
             update(tcktSolved);
             ticketClose = true;
@@ -54,7 +54,7 @@ public class TicketServiceImpl implements TicketService {
         Set<Ticket> openTick = new HashSet<>();
 
         for(Ticket ticket: repository.getAll()){
-            if(ticket.getTicketIssue().getIssueStatus().equalsIgnoreCase("Unresolved")){
+            if(!ticket.getTicketIssue().getIssueStatus()){
                 openTick.add(ticket);
             }
         }
