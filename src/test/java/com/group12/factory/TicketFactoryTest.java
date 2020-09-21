@@ -5,8 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TicketFactoryTest {
-    
-    Issue issueTest = IssueFactory.createIssue("", "", "");
+
+    Issue issueTest = IssueFactory.createIssue("", "");
     @Test
     public void createTicket() {
             Ticket ticket = TicketFactory.createTicket(issueTest);

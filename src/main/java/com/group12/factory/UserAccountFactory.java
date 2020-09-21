@@ -4,11 +4,12 @@ import com.group12.entity.UserAccount;
 import com.group12.util.GenerateID;
 import com.group12.util.Validations;
 import java.time.LocalDate;
+import java.util.Date;
 
 
 /**  Author: Rachael Klein
  *   Student no: 218 057 377
- *   Date: 01-07-2020
+ *   Date: 21-09-2020
  *   Description: Factory for UserAccountFactory
  */
 
@@ -42,6 +43,11 @@ public class UserAccountFactory {
         if (!Validations.isPasswordValid(password))
         {
             throw new Exception("This password is not valid.");
+        }
+
+        if(registerDate == null)
+        {
+            registerDate = LocalDate.now();
         }
 
         //sets the user with the values
