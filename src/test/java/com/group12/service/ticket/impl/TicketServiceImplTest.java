@@ -23,9 +23,9 @@ import static org.junit.Assert.*;
 public class TicketServiceImplTest {
 
     private static TicketService service = TicketServiceImpl.getService();//
-    private static Issue issue = IssueFactory.createIssue("Health","First aid kits need replacing","Unsolved");
+    private static Issue issue = IssueFactory.createIssue("Health","First aid kits need replacing");
     private static Ticket ticket = TicketFactory.createTicket(issue);
-    private static Issue newIss = IssueFactory.createIssue("Health","First aid kits need replacing","Resolved");
+    private static Issue newIss = IssueFactory.createIssue("Health","First aid kits need replacing");
 
 
     /* Business Logic Tests*/
