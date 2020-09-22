@@ -75,7 +75,7 @@ public class TicketServiceImplTest {
                 .setTicketIssue(newIss)
                 .build();
         updated = service.update(updated);
-        Assert.assertEquals("Resolved",updated.getTicketIssue().getIssueStatus());
+        Assert.assertEquals(true,updated.getTicketIssue().getIssueStatus());
         System.out.println("Updated: "+ updated);
     }
 
