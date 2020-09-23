@@ -1,5 +1,6 @@
 package com.group12.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /** Author: Rachael Klein
@@ -9,13 +10,15 @@ import java.time.LocalDate;
  */
 
 
-public class UserAccount
+public class UserAccount implements Serializable
 {
     private String userId;
     private String email;
     private String password;
     private boolean loginStatus;
     private LocalDate registerDate;
+
+    private UserAccount(){}
 
     //
     private UserAccount(Builder builder){

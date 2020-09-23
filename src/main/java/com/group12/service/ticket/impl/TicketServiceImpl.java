@@ -39,7 +39,11 @@ public class TicketServiceImpl implements TicketService {
         boolean ticketClose = false;
         Issue issSolved = new Issue.Builder().copy(iss).setIssueStatus(true).build();
         Ticket tcktSolved;
+<<<<<<< HEAD
         if(!(iss.getIssueStatus()== true)){
+=======
+        if(!(iss.getIssueStatus())){
+>>>>>>> 4d1d57c69a1308f2c6296b960982b5ce55005a2c
             tcktSolved = new Ticket.Builder().copy(ticket).setTicketIssue(issSolved).build();
             update(tcktSolved);
             ticketClose = true;
@@ -54,7 +58,11 @@ public class TicketServiceImpl implements TicketService {
         Set<Ticket> openTick = new HashSet<>();
 
         for(Ticket ticket: repository.getAll()){
+<<<<<<< HEAD
             if(ticket.getTicketIssue().getIssueStatus()==false){
+=======
+            if(!ticket.getTicketIssue().getIssueStatus()){
+>>>>>>> 4d1d57c69a1308f2c6296b960982b5ce55005a2c
                 openTick.add(ticket);
             }
         }
