@@ -14,6 +14,8 @@ public class Faculty {
     private String facultyId;
     private String facultyName;
 
+    private Faculty(){}
+
     private Faculty(Builder builder){
         this.facultyId = builder.facultyId;
         this.facultyName = builder.facultyName;

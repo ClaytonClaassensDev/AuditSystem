@@ -3,6 +3,7 @@ package com.group12.service.faculty.impl;
 import com.group12.entity.Faculty;
 import com.group12.repository.faculty.impl.FacultyRepositoryImpl;
 import com.group12.service.faculty.FacultyService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
  */
 
 
+@Service
 public class FacultyServiceImpl implements FacultyService {
 
     private static FacultyService service = null;

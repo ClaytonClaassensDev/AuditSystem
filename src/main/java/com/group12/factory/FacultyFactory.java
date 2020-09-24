@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 public class FacultyFactory {
 
-    public static Faculty createFactory(String facultyName) throws Exception {
+    public static Faculty createFaculty(String facultyName) throws Exception {
 
         String facultyId = GenerateID.generateID();
 
