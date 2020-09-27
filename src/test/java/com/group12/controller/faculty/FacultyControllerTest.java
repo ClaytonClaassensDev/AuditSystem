@@ -24,6 +24,7 @@ import java.util.HashSet;
  *   Description: Tests for the Faculty Controller
  */
 
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -123,6 +124,8 @@ public class FacultyControllerTest {
         HttpEntity<Faculty> request = new HttpEntity<>(newAccounting, null);
         ResponseEntity<Faculty> res = restTemplate.exchange(url, HttpMethod.PUT, request, Faculty.class);
 
+        Assert.assertEquals(200, res.getStatusCodeValue());
+
         System.out.println(res.getBody());
         System.out.println("");
     }
@@ -136,6 +139,8 @@ public class FacultyControllerTest {
 
         ResponseEntity delRes = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
 
+        Assert.assertEquals(200, delRes.getStatusCodeValue());
+
         System.out.println(delRes.getBody());
         System.out.println("");
 
@@ -148,6 +153,8 @@ public class FacultyControllerTest {
         String url = baseURL + "getAll";
 
         ResponseEntity<HashSet> getRes = restTemplate.getForEntity(url, HashSet.class);
+
+        Assert.assertEquals(200, getRes.getStatusCodeValue());
 
         for (Object fac: getRes.getBody()){
             System.out.println(fac);
