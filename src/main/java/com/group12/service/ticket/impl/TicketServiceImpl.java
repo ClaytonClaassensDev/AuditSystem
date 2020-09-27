@@ -5,6 +5,7 @@ import com.group12.entity.Ticket;
 import com.group12.repository.ticket.TicketRepository;
 import com.group12.repository.ticket.impl.TicketRepositoryImpl;
 import com.group12.service.ticket.TicketService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
         * Date: 4 September 2020
         */
 
-
+@Service
 public class TicketServiceImpl implements TicketService {
 
     private static TicketService service = null;
@@ -35,31 +36,35 @@ public class TicketServiceImpl implements TicketService {
      * Business Logic
      */
     //Business Logic 1: When you want close a ticket when the issue has been resolved
-    public boolean closeTicket(Issue iss, Ticket ticket){
+    public boolean closeTicket(String tickId) {
         boolean ticketClose = false;
-        Issue issSolved = new Issue.Builder().copy(iss).setIssueStatus("Resolved").build();
+        Ticket ticket = read(tickId);
+        Issue issSolved = new Issue.Builder().copy(ticket.getTicketIssue()).setIssueStatus(true).build();
         Ticket tcktSolved;
-        if(!(iss.getIssueStatus().equalsIgnoreCase("Resolved"))){
-            tcktSolved = new Ticket.Builder().copy(ticket).setTicketIssue(issSolved).build();
-            update(tcktSolved);
-            ticketClose = true;
-            System.out.println("Ticket has been closed");
+        Issue iss = ticket.getTicketIssue();
+
+            if (!(iss.getIssueStatus())) {
+
+                tcktSolved = new Ticket.Builder().copy(ticket).setTicketIssue(issSolved).build();
+                update(tcktSolved);
+                ticketClose = true;
+                System.out.println("Ticket has been closed");
+            }
+            return ticketClose;
         }
 
-        return ticketClose;
-    }
 
     //Business Logic 2: When you want close a ticket when the issue has been resolved
     public Set<Ticket> getAllOpen(){
         Set<Ticket> openTick = new HashSet<>();
 
-        for(Ticket ticket: repository.getAll()){
-            if(ticket.getTicketIssue().getIssueStatus().equalsIgnoreCase("Unresolved")){
-                openTick.add(ticket);
-            }
+        for(Ticket ticket: repository.getAll()) {
+            if (!ticket.getTicketIssue().getIssueStatus()) {
+                    openTick.add(ticket);
+                }
         }
-        return openTick;
-    }
+            return openTick;
+        }
 
 
 
@@ -89,3 +94,4 @@ public class TicketServiceImpl implements TicketService {
         return this.repository.getAll();
     }
 }
+

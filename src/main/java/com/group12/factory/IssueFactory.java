@@ -17,6 +17,7 @@ public class IssueFactory {
 
         Issue issue = new Issue.Builder()
                 .setIssueID(issueId)
+                .setIssueStatus(true)
                 .setIssueRaisedDate(issueRaisedDate)
                 .setIssueArea(issueArea)
                 .setIssueDescription(issueDescription)

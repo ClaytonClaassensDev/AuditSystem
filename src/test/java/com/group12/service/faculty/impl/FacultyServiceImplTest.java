@@ -3,7 +3,6 @@ package com.group12.service.faculty.impl;
 import com.group12.entity.Faculty;
 import com.group12.factory.FacultyFactory;
 import com.group12.service.faculty.FacultyService;
-import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -33,11 +32,11 @@ public class FacultyServiceImplTest{
     public void a_testCreate() {
         System.out.println("CREATE");
         try {
-            engineering = FacultyFactory.createFactory("Engineering");
-            engineering2 = FacultyFactory.createFactory("Engineering");
+            engineering = FacultyFactory.createFaculty("Engineering");
+            engineering2 = FacultyFactory.createFaculty("Engineering");
 
-            accounting = FacultyFactory.createFactory("Accounting");
-            arts = FacultyFactory.createFactory("Arts and Culture");
+            accounting = FacultyFactory.createFaculty("Accounting");
+            arts = FacultyFactory.createFaculty("Arts and Culture");
 
             service.create(engineering);
             service.create(engineering2);
@@ -77,7 +76,7 @@ public class FacultyServiceImplTest{
     @Test
     public void d_testGetAllFacultyStartingWith() {
         System.out.println("GET ALL FACULTY STARTING WITH");
-        Set<Faculty> all = service.getAllFacultyStartingWith("Ac");
+        Set<Faculty> all = service.getAllFacultyStartingWith("a");
 
         for(Faculty fac : all){
             System.out.println(fac.toString());

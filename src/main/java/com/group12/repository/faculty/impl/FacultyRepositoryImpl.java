@@ -54,12 +54,19 @@ public class FacultyRepositoryImpl implements FacultyRepository {
 
     @Override
     public Faculty update(Faculty faculty) {
+        for(Faculty item : this.facultyDB){
+            if(item.getFacultyName().equals(faculty.getFacultyName())){
+                return null;
+            }
+        }
+
         boolean deleted = delete(faculty.getFacultyId());
 
         if(deleted){
             this.facultyDB.add(faculty);
             return faculty;
         }
+
         return null;
     }
 
