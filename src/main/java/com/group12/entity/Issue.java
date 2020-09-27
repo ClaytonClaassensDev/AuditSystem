@@ -10,14 +10,18 @@ import java.time.LocalDateTime;
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
 public class Issue{
 
-    private final String issueID;
-    private final LocalDateTime issueRaisedDate;
+    private String issueID = null;
+    private LocalDateTime issueRaisedDate = null;
     private String issueArea;
     private boolean issueStatus = true;//true = open
     private boolean isResolved = false;
     private boolean isValidated = false;
-    private final String issueDescription;
-    private LocalDateTime issueResolvedDate;//This date should be set once an Issue is resolved
+    private String issueDescription  = null;
+    private LocalDateTime issueResolvedDate;//This date should be set once an Issue is resolved.
+
+    public Issue(){
+
+    }
 
     private Issue(Builder builder){
 
@@ -114,7 +118,7 @@ public class Issue{
             return this;
         }
 
-        public  Builder setIssueDescription(String issueDescription) {
+        public Builder setIssueDescription(String issueDescription) {
 
             this.issueDescription = issueDescription;
             return this;
@@ -156,8 +160,6 @@ public class Issue{
 
             return new Issue(this);
         }
-
-
 
     }
 }
