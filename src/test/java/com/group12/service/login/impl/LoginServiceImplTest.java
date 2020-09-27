@@ -81,11 +81,4 @@ public class LoginServiceImplTest
         assertEquals(1, logins.size());
         System.out.println("All Logins: " + logins);
     }
-
-    @Test
-    public void d_authenticate()
-    {
-        boolean authenticated = service.authenticate(login.getLoginID(), userAccount);
-        assertTrue(authenticated);
-    }
 }

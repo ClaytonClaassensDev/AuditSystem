@@ -14,6 +14,9 @@ public class Login
     private String emailAddress;
     private String password;
 
+    public Login() {
+    }
+
     private Login(Builder builder)
     {
         this.loginID = builder.loginID;

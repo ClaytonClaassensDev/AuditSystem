@@ -13,5 +13,4 @@ import java.util.Set;
 public interface LoginService extends IService<Login, String>
 {
     Set<Login> getAll();
-    boolean authenticate(String loginID, UserAccount userAccount);
 }
