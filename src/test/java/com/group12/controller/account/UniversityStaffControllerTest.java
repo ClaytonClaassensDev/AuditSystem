@@ -1,0 +1,86 @@
+package com.group12.controller.account;
+/**  Author: Limpho Ranamane
+ *   Date: 22-09-2020
+ *   Description: Testing UniversityStaff controller
+ */
+
+import com.group12.entity.UniversityStaff;
+import com.group12.factory.UniversityStaffFactory;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.*;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)//fixes methods to run in a sequence
+@RunWith(SpringRunner.class)
+public class UniversityStaffControllerTest {
+
+    @Autowired
+    private TestRestTemplate restTemplate; // specifically used to test sping framework controllers
+
+    String baseUrl = "http://localhost:8080/universityStaff";
+
+    private static UniversityStaff universityStaff = UniversityStaffFactory.createUniversityStaff("Ken","Soliman","0896097317");
+
+
+    @Test
+    public void a_create() {
+        String url = baseUrl+"/create";
+        ResponseEntity<UniversityStaff> responseEntity = restTemplate.postForEntity(url, universityStaff,UniversityStaff.class);
+        System.out.println("Created: " + universityStaff);
+        if (universityStaff !=responseEntity.getBody()){
+            universityStaff = responseEntity.getBody(); // this is to ensure that the created UniversityStaff has the same attributes as the one provided by the response entity.
+        }
+        assertEquals(universityStaff,responseEntity.getBody());
+        System.out.println("Saved universityStaff: " + responseEntity.getBody());
+    }
+
+    @Test
+    public void b_read() {
+        String url = baseUrl+"/read/"+ universityStaff.getUniversityStaffID();
+        ResponseEntity<UniversityStaff> responseEntity = restTemplate.getForEntity(url,UniversityStaff.class);
+        assertEquals(universityStaff.getUniversityStaffID(),responseEntity.getBody().getUniversityStaffID());
+        System.out.println("UniversityStaff created: "+ universityStaff.getUniversityStaffID()+"\n"+"UniversityStaff read: " + responseEntity.getBody().getUniversityStaffID());
+
+    }
+
+    @Test
+    public void c_update() {
+        UniversityStaff updatedUniversityStaff = new UniversityStaff.Builder().copy(universityStaff).setUniversityStaffSurname("Khan").build();
+        String url = baseUrl+"/update";
+        HttpEntity<UniversityStaff> universityStaffHttpEntity = new HttpEntity<>(updatedUniversityStaff,null);
+        ResponseEntity<UniversityStaff> responseUpdated = restTemplate.exchange(url, HttpMethod.PUT,universityStaffHttpEntity,UniversityStaff.class);
+        assertEquals(updatedUniversityStaff.getUniversityStaffSurname(),responseUpdated.getBody().getUniversityStaffSurname());
+        System.out.println("UniversityStaff: "+updatedUniversityStaff.getUniversityStaffID()+"\n"+"Response from update: " + responseUpdated.getBody().getUniversityStaffID());
+
+    }
+
+    @Test
+    public void e_delete() {
+        String url = baseUrl+"/delete/"+ universityStaff.getUniversityStaffID();
+        System.out.println("Deleting user: " + url);
+        restTemplate.delete(url);
+        assertTrue("Deleted: "+ universityStaff.getUniversityStaffID(),true);
+    }
+
+    @Test
+    public void d_getAll() {
+        String url = baseUrl+"/all";
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> retrievingAll= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        assertNotNull(retrievingAll);
+        System.out.println("UniversityStaff: "+ universityStaff +"\n"+"UniversityStaff on DB: " + retrievingAll.getBody());
+
+    }
+}
