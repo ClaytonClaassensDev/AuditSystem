@@ -8,6 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
+
+/**  Author: Ebenezer Mathebula
+ *   Student no: 217301827
+ *   Date: 26-09-2020
+ *   Description: Faculty Controller to expose Faculty business logic to the web
+ */
+
+
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {

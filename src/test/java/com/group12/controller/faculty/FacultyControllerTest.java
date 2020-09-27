@@ -15,6 +15,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashSet;
+
+
+/**  Author: Ebenezer Mathebula
+ *   Student no: 217301827
+ *   Date: 26-09-2020
+ *   Description: Tests for the Faculty Controller
+ */
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
@@ -26,11 +34,6 @@ public class FacultyControllerTest {
 
     private String baseURL = "http://localhost:8080/faculty/";
 
-    // Instances to test with
-    private static Faculty engineering = null;
-    private static Faculty accounting = null;
-    private static Faculty acting = null;
-
 
     @Test
     public void a_create() {
@@ -39,17 +42,16 @@ public class FacultyControllerTest {
         String url = baseURL + "create";
 
         try {
-            engineering = FacultyFactory.createFaculty("Engineering");
-            accounting = FacultyFactory.createFaculty("Accounting");
-            acting = FacultyFactory.createFaculty("Acting");
+            // Instances to test with
+            Faculty engineering = FacultyFactory.createFaculty("Engineering");
+            Faculty accounting = FacultyFactory.createFaculty("Accounting");
+            Faculty acting = FacultyFactory.createFaculty("Acting");
 
             ResponseEntity<String> engPostRes = restTemplate.postForEntity(url, engineering, String.class);
             ResponseEntity<String> accPostRes = restTemplate.postForEntity(url, accounting, String.class);
             ResponseEntity<String> actPostRes = restTemplate.postForEntity(url, acting, String.class);
 
-            System.out.println(engPostRes.getBody());
-            System.out.println(accPostRes.getBody());
-            System.out.println(actPostRes.getBody());
+            Assert.assertEquals(200, engPostRes.getStatusCodeValue());
             System.out.println("");
         }
         catch (Exception e) {
@@ -62,20 +64,28 @@ public class FacultyControllerTest {
     @Test
     public void c_getAllStartingWith() {
         System.out.println("GET ALL STARTING WITH");
-        String url = baseURL + "getAllStartWith/ac";
-        ResponseEntity<String> getRes = restTemplate.getForEntity(url, String.class);
 
-        System.out.println(getRes.getBody());
+        String url = baseURL + "getAllStartWith/Ac";
+        ResponseEntity<HashSet> getRes = restTemplate.getForEntity(url, HashSet.class);
+
+        Assert.assertEquals(200, getRes.getStatusCodeValue());
+
+        for (Object fac: getRes.getBody()){
+            System.out.println(fac);
+        }
         System.out.println("");
     }
 
     @Test
     public void d_getByName() {
         System.out.println("GET BY NAME");
-        String name = acting.getFacultyName();
+
+        String name = "Acting";
         String url = baseURL + "getByName/" + name;
 
         ResponseEntity<String> getRes = restTemplate.getForEntity(url, String.class);
+
+        Assert.assertEquals(200, getRes.getStatusCodeValue());
 
         System.out.println(getRes.getBody());
         System.out.println("");
@@ -84,10 +94,14 @@ public class FacultyControllerTest {
     @Test
     public void e_getById() {
         System.out.println("GET BY ID");
-        String id = acting.getFacultyId();
+
+        String id = restTemplate.getForEntity(baseURL+"getByName/Acting", Faculty.class).getBody().getFacultyId();
+
         String url = baseURL + "getById/" + id;
 
         ResponseEntity<String> getRes = restTemplate.getForEntity(url, String.class);
+
+        Assert.assertEquals(200, getRes.getStatusCodeValue());
 
         System.out.println(getRes.getBody());
         System.out.println("");
@@ -98,14 +112,16 @@ public class FacultyControllerTest {
         System.out.println("UPDATE");
         String url = baseURL + "update";
 
+        Faculty accounting = restTemplate.getForEntity(baseURL + "getByName/Accounting", Faculty.class).getBody();
+
         Faculty newAccounting = new Faculty
                 .Builder()
                 .copy(accounting)
                 .setFacultyName("Financial Accounting")
                 .build();
 
-        HttpEntity<Faculty> request = new HttpEntity<>(newAccounting);
-        ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+        HttpEntity<Faculty> request = new HttpEntity<>(newAccounting, null);
+        ResponseEntity<Faculty> res = restTemplate.exchange(url, HttpMethod.PUT, request, Faculty.class);
 
         System.out.println(res.getBody());
         System.out.println("");
@@ -114,12 +130,13 @@ public class FacultyControllerTest {
     @Test
     public void g_delete() {
         System.out.println("DELETE");
-        String id = acting.getFacultyId();
+
+        String id = restTemplate.getForEntity(baseURL + "getByName/Engineering", Faculty.class).getBody().getFacultyId();
         String url = baseURL + "delete/" + id;
 
-        //ResponseEntity<String> getRes = restTemplate.delete(url);
+        ResponseEntity delRes = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
 
-        //System.out.println(getRes.getBody());
+        System.out.println(delRes.getBody());
         System.out.println("");
 
     }
@@ -130,9 +147,11 @@ public class FacultyControllerTest {
         System.out.println("GET ALL");
         String url = baseURL + "getAll";
 
-        ResponseEntity<String> getRes = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<HashSet> getRes = restTemplate.getForEntity(url, HashSet.class);
 
-        System.out.println(getRes.getBody());
+        for (Object fac: getRes.getBody()){
+            System.out.println(fac);
+        }
         System.out.println("");
     }
 

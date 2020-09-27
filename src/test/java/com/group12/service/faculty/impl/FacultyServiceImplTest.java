@@ -76,7 +76,7 @@ public class FacultyServiceImplTest{
     @Test
     public void d_testGetAllFacultyStartingWith() {
         System.out.println("GET ALL FACULTY STARTING WITH");
-        Set<Faculty> all = service.getAllFacultyStartingWith("Ac");
+        Set<Faculty> all = service.getAllFacultyStartingWith("a");
 
         for(Faculty fac : all){
             System.out.println(fac.toString());

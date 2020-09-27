@@ -49,7 +49,10 @@ public class FacultyServiceImpl implements FacultyService {
         Set<Faculty> faculties = new HashSet<>();
 
         for (Faculty fac : getAll()){
-            if(fac.getFacultyName().startsWith(start)){
+            start = start.toLowerCase();
+            String facName = fac.getFacultyName().toLowerCase();
+
+            if(facName.startsWith(start)){
                 faculties.add(fac);
             }
         }
