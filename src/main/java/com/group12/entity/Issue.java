@@ -17,7 +17,7 @@ public class Issue{
     private boolean isResolved = false;
     private boolean isValidated = false;
     private String issueDescription  = null;
-    private LocalDateTime issueResolvedDate;//This date should be set once an Issue is resolved
+    private LocalDateTime issueResolvedDate;//This date should be set once an Issue is resolved.
 
     public Issue(){
 

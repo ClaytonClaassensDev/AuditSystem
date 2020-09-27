@@ -69,6 +69,7 @@ public class IssueServiceImpl implements IssueService {
 
         Issue validatedIssue = null;
 
+
         try {
             Issue issue = this.issueRepository.read(issueID);
 
