@@ -12,8 +12,10 @@ import com.group12.service.account.UserAccountService;
 import com.group12.util.GenerateID;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -27,6 +29,7 @@ import static org.junit.Assert.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
 @RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserAccountControllerTest {
 
     static LocalDate date = LocalDate.now();
@@ -38,24 +41,20 @@ public class UserAccountControllerTest {
     //need a base URl
     private static String baseURL = "http://localhost:8080/userAccount";
 
-    private UserAccount CreateUser() throws Exception
-    {
-        UserAccount userAccount = UserAccountFactory.createUserAccount("rachael@cput.ac.za", "rachael@cput.ac.za", true, date);
-        String url = baseURL + "/create";
-        ResponseEntity<UserAccount> postResponse = restTemplate.postForEntity(url, userAccount, UserAccount.class);
-        return postResponse.getBody();
-    }
+    private static String userAccountId;
 
     @Test
     public void a_create() {
         try {
-            UserAccount userAccount = UserAccountFactory.createUserAccount("rachael@cput.ac.za", "rachael@cput.ac.za", true, date);
+            UserAccount userAccount = UserAccountFactory.createUserAccount("rachael@cput.ac.za", "P@ssword123", true, date);
             String url = baseURL + "/create";
             System.out.println(url);
             ResponseEntity<UserAccount> postResponse = restTemplate.postForEntity(url, userAccount, UserAccount.class);
             assertNotNull(postResponse);
             assertNotNull(postResponse.getBody());
             System.out.println(postResponse.getBody());
+
+            userAccountId = postResponse.getBody().getUserId();
         }catch (Exception e)
         {
             fail();
@@ -65,12 +64,11 @@ public class UserAccountControllerTest {
     @Test
     public void b_read() {
         try {
-            UserAccount userAccount = CreateUser();
-
-            String url = baseURL + "/read?userId=" +  userAccount.getUserId();
+            String url = baseURL + "/read?userId=" +  userAccountId;
             System.out.println("URL: " + url);
+
             ResponseEntity<UserAccount> accountResponse = restTemplate.getForEntity(url, UserAccount.class);
-            assertEquals(userAccount.getUserId(), accountResponse.getBody().getUserId());
+            assertEquals(userAccountId, accountResponse.getBody().getUserId());
         }catch(Exception e)
         {
             fail();
@@ -80,14 +78,20 @@ public class UserAccountControllerTest {
     @Test
     public void c_update() {
         try{
-            UserAccount userAccount = CreateUser();
+            // First get the existing user by it's ID
+            String getUrl = baseURL + "/read?userId=" +  userAccountId;
+            System.out.println("URL: " + getUrl);
+            ResponseEntity<UserAccount> accountResponse = restTemplate.getForEntity(getUrl, UserAccount.class);
+            UserAccount userAccount = accountResponse.getBody();
 
+            // Update the existing user
             UserAccount updated = new UserAccount.Builder().copy(userAccount).setEmail("RachaelJoubert@gmail.com").build();
-            String url = baseURL + "/update";
-            System.out.println("URL: " + url);
+            String updateUrl = baseURL + "/update";
+            System.out.println("URL: " + updateUrl);
             System.out.println("Put data: " + updated);
             HttpEntity<UserAccount> httpsEntityUserAccount = new HttpEntity<UserAccount>(updated, null);
-            ResponseEntity<UserAccount> updateResponse = restTemplate.exchange(url, HttpMethod.PUT, httpsEntityUserAccount, UserAccount.class);
+            ResponseEntity<UserAccount> updateResponse = restTemplate.exchange(updateUrl, HttpMethod.PUT, httpsEntityUserAccount, UserAccount.class);
+
             assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
             assertEquals(updated.getEmail(), updateResponse.getBody().getEmail());
         }catch (Exception e)
@@ -98,18 +102,17 @@ public class UserAccountControllerTest {
 
     @Test
     public void d_registerUserAccount() {
-        String randomEmail = "rachael" + GenerateID.generateID() + "@cput.ac.za";
-        String url = baseURL + "/registerUserAccount?email="+randomEmail+"&verifyemail="+randomEmail+"&password=P@ssword123&verifypassword=P@ssword123";
+        String email = "rachaelRegister@cput.ac.za";
+        String url = baseURL + "/registerUserAccount?email="+email+"&verifyemail="+email+"&password=P@ssword123&verifypassword=P@ssword123";
         System.out.println("URL: " + url);
         ResponseEntity<UserAccount> registerResponse = restTemplate.postForEntity(url, null, UserAccount.class);
-        assertEquals(randomEmail, registerResponse.getBody().getEmail());
+        assertEquals(email, registerResponse.getBody().getEmail());
     }
 
     @Test
     public void e_changePassword() {
         try{
-            CreateUser();
-            String url = baseURL + "/changePassword?email=rachael@cput.ac.za&existingPassword=rachael@cput.ac.za&newPassword=123P@ssword&verifyNewPassword=123P@ssword";
+            String url = baseURL + "/changePassword?email=RachaelJoubert@gmail.com&existingPassword=P@ssword123&newPassword=123P@ssword&verifyNewPassword=123P@ssword";
             System.out.println("URL: " + url);
             ResponseEntity updateResponse = restTemplate.exchange(url, HttpMethod.PUT, null, boolean.class);
             assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
@@ -123,8 +126,8 @@ public class UserAccountControllerTest {
     @Test
     public void f_updateEmailAddress() {
         try{
-            CreateUser();
-            String url = baseURL + "/updateEmailAddress?email=rachael@cput.ac.za&existingPassword=rachael@cput.ac.za&newEmail=rachaelKlein@cput.ac.za&verifyNewEmail=rachaelKlein@cput.ac.za";
+            // the update email address end point takes in multiple param. seperated by a & symbol.
+            String url = baseURL + "/updateEmailAddress?email=RachaelJoubert@gmail.com&existingPassword=123P@ssword&newEmail=rachaelKlein@cput.ac.za&verifyNewEmail=rachaelKlein@cput.ac.za";
             System.out.println("URL: " + url);
             ResponseEntity updateResponse = restTemplate.exchange(url, HttpMethod.PUT, null, boolean.class);
             assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
@@ -138,9 +141,7 @@ public class UserAccountControllerTest {
     @Test
     public void g_forgotPassword() {
         try {
-            UserAccount userAccount = CreateUser();
-
-            String url = baseURL + "/forgotPassword?email=" +  userAccount.getEmail();
+            String url = baseURL + "/forgotPassword?email=rachaelKlein@cput.ac.za";
             System.out.println("URL: " + url);
             ResponseEntity accountResponse = restTemplate.getForEntity(url, boolean.class);
             assertEquals(HttpStatus.OK, accountResponse.getStatusCode());
@@ -154,25 +155,30 @@ public class UserAccountControllerTest {
     @Test
     public void h_getUserAccountViaEmailAddress() {
         try {
-            UserAccount userAccount = CreateUser();
-
-            String url = baseURL + "/getUserAccountViaEmailAddress?email=" +  userAccount.getEmail();
+            String url = baseURL + "/getUserAccountViaEmailAddress?email=rachaelKlein@cput.ac.za";
             System.out.println("URL: " + url);
             ResponseEntity<UserAccount> accountResponse = restTemplate.getForEntity(url, UserAccount.class);
             assertEquals(HttpStatus.OK, accountResponse.getStatusCode());
-            assertEquals(userAccount.getEmail(), accountResponse.getBody().getEmail());
+            assertEquals("rachaelKlein@cput.ac.za", accountResponse.getBody().getEmail());
         }catch(Exception e)
         {
             fail();
         }
     }
 
-
     @Test
-    public void i_delete() {
+    public void i_getAll() {
+        String url = baseURL + "/all";
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<String> entity = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        System.out.println(response);
+        System.out.println(response.getBody());
+    }
+    @Test
+    public void j_delete() {
         try{
-            UserAccount userAccount = CreateUser();
-            String url = baseURL + "/delete?userId=" + userAccount.getUserId();
+            String url = baseURL + "/delete?userId=" + userAccountId;
             System.out.println("URL: " + url);
             ResponseEntity updateResponse = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
             assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
@@ -181,16 +187,5 @@ public class UserAccountControllerTest {
         {
             fail();
         }
-    }
-
-
-    @Test
-    public void j_getAll() {
-        String url = baseURL + "/all";
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        System.out.println(response);
-        System.out.println(response.getBody());
     }
 }

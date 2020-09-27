@@ -1,5 +1,6 @@
 package com.group12.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 /** Author: Stefano Ngantweni
  *   Student no: 216 283 132
@@ -7,11 +8,15 @@ import java.time.LocalDate;
  *   Description: Entity for Ticket
  */
 
-public class Ticket {
+public class Ticket implements Serializable {
     private String ticketId;
     private String ticketDesc;
     private Issue ticketIssue;
     private LocalDate ticketDate;
+
+    private Ticket(){
+
+    }
 
     private Ticket(Builder builder) {
         this.ticketId = builder.ticketId;
@@ -46,7 +51,7 @@ public class Ticket {
         //Setters
         public Builder setTicketId(String ticketId) { this.ticketId = ticketId;
             return this;}
-        public Builder setTicketDesc(String ticketDesc) { this.ticketDesc = ticketDesc;
+        public Builder setTicketDesc(String ticketDesc) { this.ticketDesc = ticketIssue.getIssueDescription();
             return this;}
         public Builder setTicketIssue(Issue ticketIssue) { this.ticketIssue = ticketIssue;
             return this;}

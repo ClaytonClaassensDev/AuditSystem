@@ -2,7 +2,6 @@ package com.group12.service.ticket.impl;
 
 import com.group12.entity.Issue;
 import com.group12.entity.Ticket;
-import com.group12.entity.UserAccount;
 import com.group12.factory.IssueFactory;
 import com.group12.factory.TicketFactory;
 import com.group12.repository.ticket.TicketRepository;
@@ -25,7 +24,7 @@ public class TicketServiceImplTest {
     private static TicketService service = TicketServiceImpl.getService();//
     private static Issue issue = IssueFactory.createIssue("Health","First aid kits need replacing");
     private static Ticket ticket = TicketFactory.createTicket(issue);
-    private static Issue newIss = IssueFactory.createIssue("Health","First aid kits need replacing");
+    private static Issue newIss = new Issue.Builder().copy(issue).setIssueStatus(true).build();
 
 
     /* Business Logic Tests*/
@@ -75,7 +74,7 @@ public class TicketServiceImplTest {
                 .setTicketIssue(newIss)
                 .build();
         updated = service.update(updated);
-        Assert.assertEquals("Resolved",updated.getTicketIssue().getIssueStatus());
+        Assert.assertEquals(true,updated.getTicketIssue().getIssueStatus());
         System.out.println("Updated: "+ updated);
     }
 
