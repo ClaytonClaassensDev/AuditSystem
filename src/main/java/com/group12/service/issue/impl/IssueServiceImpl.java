@@ -4,10 +4,12 @@ import com.group12.entity.Issue;
 import com.group12.repository.issue.IssueRepository;
 import com.group12.repository.issue.impl.IssueRepositoryImpl;
 import com.group12.service.issue.IssueService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Service
 public class IssueServiceImpl implements IssueService {
 
     private static IssueService issueService = null;
@@ -33,27 +35,30 @@ public class IssueServiceImpl implements IssueService {
         return this.issueRepository.getAll();
     }
 
-    @Override
-    public Issue getIssueByID(String issueID) {
-
-        return this.issueRepository.read(issueID);
-    }
-
+    //issueStatus true=open
     @Override
     public Issue resolveIssue(String issueID) {
 
         Issue resolvedIssue = null;
+        try {
 
-        Issue issue = this.issueRepository.read(issueID);
 
-        if(issue.getIssueStatus() == true && issue.getIsResolved() == false){
+            Issue issue = this.issueRepository.read(issueID);
 
-            resolvedIssue = new Issue.Builder().copy(issue)
-                    .setIsResolved(true)
-                    .setIssueResolvedDate(LocalDateTime.now())
-                    .build();
+            if (issueID != null) {
 
-            this.issueRepository.update(resolvedIssue);
+                resolvedIssue = new Issue.Builder().copy(issue)
+                        .setIsResolved(true)
+                        .setIssueResolvedDate(LocalDateTime.now())
+                        .build();
+
+                this.issueRepository.update(resolvedIssue);
+            }
+
+
+        }catch (Exception e){
+
+            System.out.print(e.getCause());
         }
 
         return resolvedIssue;
@@ -63,17 +68,24 @@ public class IssueServiceImpl implements IssueService {
     public Issue validateIssue(String issueID) {
 
         Issue validatedIssue = null;
-        Issue issue = this.issueRepository.read(issueID);
 
-        if(issue.getIssueStatus() == true && issue.getIsResolved() == true){
+        try {
+            Issue issue = this.issueRepository.read(issueID);
 
-            validatedIssue = new Issue.Builder().copy(issue)
-                    .setIsValidated(true)
-                    .build();
+            if (issueID != null) {
 
-            this.issueRepository.update(validatedIssue);
+                validatedIssue = new Issue.Builder().copy(issue)
+
+                        .setIsValidated(true)
+                        .build();
+
+                this.issueRepository.update(validatedIssue);
+            }
+
+        }catch (Exception e){
+
+            System.out.printf(e.getMessage());
         }
-
         return validatedIssue;
     }
 

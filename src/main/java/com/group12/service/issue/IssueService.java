@@ -12,8 +12,6 @@ public interface IssueService extends IService<Issue, String> {
 
     Set<Issue> getAll();
 
-    Issue getIssueByID(String issueID);
-
     Issue resolveIssue(String issueID);
 
     Issue validateIssue(String issueID);

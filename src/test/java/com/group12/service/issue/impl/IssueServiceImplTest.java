@@ -44,7 +44,7 @@ public class IssueServiceImplTest {
         try {
 
         Issue expectedIssue = issue;
-        Issue actualIssue = issueService.getIssueByID(issue.getIssueID());
+        Issue actualIssue = issueService.read(issue.getIssueID());
 
         assertEquals(expectedIssue.getIssueID(), actualIssue.getIssueID());
     }catch (Exception e){
@@ -61,7 +61,7 @@ public class IssueServiceImplTest {
 
         issueService.resolveIssue(issue.getIssueID());
 
-        Issue actualIssue = issueService.getIssueByID(issue.getIssueID());
+        Issue actualIssue = issueService.read(issue.getIssueID());
         System.out.printf(""+actualIssue.getIsResolved());
         assertTrue(actualIssue.getIsResolved());
 
@@ -79,7 +79,7 @@ public class IssueServiceImplTest {
 
         issueService.validateIssue(issue.getIssueID());
 
-        Issue actualIssue = issueService.getIssueByID(issue.getIssueID());
+        Issue actualIssue = issueService.read(issue.getIssueID());
         System.out.printf("resolved: "+actualIssue.getIsResolved()+"   validated: " + actualIssue.getIsValidated());
         assertTrue(actualIssue.getIsValidated());
 
@@ -97,7 +97,7 @@ public class IssueServiceImplTest {
 
         issueService.openIssue(issue.getIssueID());
 
-        Issue actualIssue = issueService.getIssueByID(issue.getIssueID());
+        Issue actualIssue = issueService.read(issue.getIssueID());
 
         assertTrue(actualIssue.getIssueStatus());
         }catch (Exception e){
@@ -114,7 +114,7 @@ public class IssueServiceImplTest {
 
         issueService.closeIssue(issue.getIssueID());
 
-        Issue actualIssue = issueService.getIssueByID(issue.getIssueID());
+        Issue actualIssue = issueService.read(issue.getIssueID());
         System.out.printf(""+actualIssue.getIssueStatus());
         assertFalse(actualIssue.getIssueStatus());
         }catch (Exception e){
@@ -129,7 +129,7 @@ public class IssueServiceImplTest {
         try {
 
         Issue expectedIssue = issueService.create(issue);
-        Issue actualIssue = issueService.getIssueByID(issue.getIssueID());
+        Issue actualIssue = issueService.read(issue.getIssueID());
 
         assertEquals(expectedIssue, actualIssue);
         }catch (Exception e){
