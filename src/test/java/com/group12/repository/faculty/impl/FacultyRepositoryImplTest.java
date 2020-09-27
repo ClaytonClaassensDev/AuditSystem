@@ -29,9 +29,9 @@ public class FacultyRepositoryImplTest {
     @Test
     public void a_create() {
         try {
-            engineering = FacultyFactory.createFactory("Engineering");
-            accounting = FacultyFactory.createFactory("Accounting");
-            arts = FacultyFactory.createFactory("Arts and Culture");
+            engineering = FacultyFactory.createFaculty("Engineering");
+            accounting = FacultyFactory.createFaculty("Accounting");
+            arts = FacultyFactory.createFaculty("Arts and Culture");
 
             repo.create(engineering);
             repo.create(accounting);

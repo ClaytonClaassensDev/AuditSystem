@@ -4,6 +4,7 @@ import com.group12.entity.Department;
 import com.group12.repository.department.DepartmentRepository;
 import com.group12.repository.department.impl.DepartmentRepositoryImpl;
 import com.group12.service.department.DepartmentService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 /**
@@ -11,6 +12,8 @@ import java.util.Set;
  * Desc: Service Implementation for Department
  * Date: 06 September 2020
  */
+
+@Service
 public class DepartmentServiceImpl implements DepartmentService
 {
 
@@ -28,6 +31,8 @@ public class DepartmentServiceImpl implements DepartmentService
         if (service == null) service = new DepartmentServiceImpl();
         return service;
     }
+
+
 
     // This method returns a department object using department repository
     @Override

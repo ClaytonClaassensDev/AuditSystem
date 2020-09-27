@@ -3,6 +3,7 @@ package com.group12.service.faculty.impl;
 import com.group12.entity.Faculty;
 import com.group12.repository.faculty.impl.FacultyRepositoryImpl;
 import com.group12.service.faculty.FacultyService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
  */
 
 
+@Service
 public class FacultyServiceImpl implements FacultyService {
 
     private static FacultyService service = null;
@@ -47,7 +49,10 @@ public class FacultyServiceImpl implements FacultyService {
         Set<Faculty> faculties = new HashSet<>();
 
         for (Faculty fac : getAll()){
-            if(fac.getFacultyName().startsWith(start)){
+            start = start.toLowerCase();
+            String facName = fac.getFacultyName().toLowerCase();
+
+            if(facName.startsWith(start)){
                 faculties.add(fac);
             }
         }
