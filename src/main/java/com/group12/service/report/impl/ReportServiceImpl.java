@@ -4,6 +4,7 @@ import com.group12.entity.Report;
 import com.group12.repository.report.ReportRepository;
 import com.group12.repository.report.impl.ReportRepositoryImpl;
 import com.group12.service.report.ReportService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 /**
@@ -11,6 +12,8 @@ import java.util.Set;
  * Desc: Service Implementation for report
  * Date: 28 August 2020
  */
+
+@Service
 public class ReportServiceImpl implements ReportService
 {
 

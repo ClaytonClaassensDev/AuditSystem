@@ -4,6 +4,7 @@ import com.group12.entity.UniversityStaff;
 import com.group12.repository.account.UniversityStaffRepository;
 import com.group12.repository.account.impl.UniversityStaffRepositoryImpl;
 import com.group12.service.account.UniversityStaffService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
@@ -11,6 +12,8 @@ import java.util.Set;
  *   Date: 01-09-2020
  *   Description: UniversityStaff service implementation responsible for providing service for repository on University Staff
  */
+
+@Service
 public class UniversityStaffServiceImpl implements com.group12.service.account.UniversityStaffService {
 
     private UniversityStaffRepository universityStaffRepository;

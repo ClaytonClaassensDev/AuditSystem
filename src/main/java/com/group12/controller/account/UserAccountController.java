@@ -17,18 +17,32 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@RestController
-@RequestMapping("/userAccount")
+@RestController // states that this class is a rest Controller containing end points
+@RequestMapping("/userAccount") // this is the base route for the userAccount controller
 public class UserAccountController {
+
+    // GetMapping -> return existing data to whoever calls the end point
+    // eg -> read, that returns a userAccount
+
+    // PutMapping -> updating existing data
+    // eg -> changePassword, can update password if password has been forgotten
+
+    // DeleteMapping -> To delete existing data
+    // eg -> deleting an UserAccount
+
+    // PostMapping -> creating new data
+    // eg -> creating userAccount
+
 
     //have to call userAccount service
     //wired means i am injecting the constructor of service into UserAccount class
-    @Autowired
+    @Autowired // UserAccountService instance created here inside UserAccount controller class
     private UserAccountService userAccountService; // made UserAccountService annotated with Service
 
     //Business logic 1
-    @PostMapping("/create")
-    public ResponseEntity<UserAccount> create(@RequestBody UserAccount userAccount) {
+    @PostMapping("/create") // this is a post end point, that contains a route that builds onto the controller route
+    //and returns a response entity containing the userAccount result
+    public ResponseEntity<UserAccount> create(@RequestBody UserAccount userAccount) { // ResponseEntity is a class, an object that get returned from end points
         try {
             UserAccount newUserAccount = UserAccountFactory.createUserAccount(userAccount.getEmail(), userAccount.getPassword(),
                     userAccount.isLoginStatus(), userAccount.getRegisterDate());
@@ -41,6 +55,13 @@ public class UserAccountController {
     }
 
     //Business logic 2
+    // Here is the URL:localhost:8080/userAccount/read?userId=ceed6528-e061-460c-8ceb-2305d8c0c024
+    // from URL from Postman:
+    // URL:localhost:8080 ->  server address
+    // /userAccount-> controller route
+    // /read -> is the the end point route
+    // ?userId=ceed6528-e061-460c-8ceb-2305d8c0c024 ->  ? represents the end of route & start of param.
+
     @GetMapping("/read")
     public ResponseEntity<UserAccount> read(@RequestParam String userId){
         UserAccount read = userAccountService.read(userId);
@@ -137,7 +158,7 @@ public class UserAccountController {
         }
         catch (Exception e)
         {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // ResponseEntity doesnt need a return type here, as it auto picks up the type
         }
     }
 

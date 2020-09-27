@@ -5,6 +5,7 @@ import com.group12.entity.UserAccount;
 import com.group12.repository.login.LoginRepository;
 import com.group12.repository.login.impl.LoginRepositoryImpl;
 import com.group12.service.login.LoginService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
  * Desc: Service Implementation for login
  * Date: 28 August 2020
  */
+@Service
 public class LoginServiceImpl implements LoginService
 {
 
@@ -64,19 +66,5 @@ public class LoginServiceImpl implements LoginService
     public Set<Login> getAll()
     {
         return this.repository.getAll();
-    }
-
-    // This method checks the email and password used to login against the email and password of users
-    // If the login email and password matches the email and password of a user, that user is authenticated
-    @Override
-    public boolean authenticate(String loginID, UserAccount userAccount)
-    {
-        String loginEmail = repository.read(loginID).getEmailAddress();
-        String loginPassword = repository.read(loginID).getPassword();
-        String userEmail = userAccount.getEmail();
-        String userPassword = userAccount.getPassword();
-        if (loginEmail.equals(userEmail) && loginPassword.equals(userPassword))
-            return true;
-        return false;
     }
 }

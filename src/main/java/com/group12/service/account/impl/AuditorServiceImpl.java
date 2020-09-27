@@ -4,6 +4,7 @@ import com.group12.entity.Auditor;
 import com.group12.repository.account.AuditorRepository;
 import com.group12.repository.account.impl.AuditorRepositoryImpl;
 import com.group12.service.account.AuditorService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
@@ -11,6 +12,8 @@ import java.util.Set;
  *   Date: 01-09-2020
  *   Description: Auditor service implementation responsible for providing service for repository on Auditor
  */
+
+@Service //acts as a service over the internet
 public class AuditorServiceImpl implements AuditorService {
 
     private AuditorRepository auditorRepository;

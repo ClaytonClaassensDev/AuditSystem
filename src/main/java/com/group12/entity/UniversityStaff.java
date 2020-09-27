@@ -10,6 +10,7 @@ public class UniversityStaff {
 
     private String universityStaffID, universityStaffFirstName, universityStaffSurname, universityStaffCellPhone;
 
+    private UniversityStaff(){}
 
     private UniversityStaff(Builder builder) {
 

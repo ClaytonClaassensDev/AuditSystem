@@ -9,6 +9,9 @@ public class Auditor {
 
     private String auditorID,auditorFirstName, auditorSurname, auditorCellPhone;
 
+    private Auditor() {
+    }
+
     private Auditor(Builder builder) {
 
         this.auditorID = builder.auditorID;
