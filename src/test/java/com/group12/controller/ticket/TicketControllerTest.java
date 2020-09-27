@@ -84,7 +84,7 @@ public class TicketControllerTest {
     @Test
     public void g_delete() {
         Ticket ticket = TicketFactory.createTicket(issue);
-        String url = baseURL + "/delete?userId=" + ticket.getTicketId();
+        String url = baseURL + "delete?id=" + ticket.getTicketId();
         System.out.println("URL: " + url);
         ResponseEntity updateResponse = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
         assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
