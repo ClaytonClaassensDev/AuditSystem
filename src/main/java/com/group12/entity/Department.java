@@ -1,5 +1,10 @@
 package com.group12.entity;
 
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+
+@JsonDeserialize(builder = Department.Builder.class)
 public class Department {
 
     private String depid;
