@@ -55,7 +55,6 @@ public class IssueServiceImpl implements IssueService {
                 this.issueRepository.update(resolvedIssue);
             }
 
-
         }catch (Exception e){
 
             System.out.print(e.getCause());

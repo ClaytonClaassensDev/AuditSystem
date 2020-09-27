@@ -43,7 +43,6 @@ public class IssueRepositoryImpl implements IssueRepository {
 
             if(issue.getIssueID().equals(id)){
 
-
                 found = true;
 
             } else found = false;

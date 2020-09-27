@@ -161,7 +161,5 @@ public class Issue{
             return new Issue(this);
         }
 
-
-
     }
 }

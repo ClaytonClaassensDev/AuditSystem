@@ -12,7 +12,6 @@ public class IssueFactory {
     //When an issue is raised, this method is used to create an Issue object;
     public static Issue createIssue(String issueArea, String issueDescription){
 
-
         String issueId = GenerateID.generateID();
         LocalDateTime issueRaisedDate = GenerateIssueRaisedDate.generateIssueRaisedDate();
 

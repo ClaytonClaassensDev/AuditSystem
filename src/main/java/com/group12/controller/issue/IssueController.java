@@ -130,7 +130,6 @@ public class IssueController {
 
         }else return new ResponseEntity(HttpStatus.NOT_FOUND);
 
-
     }
 
     @GetMapping(value = "/openIssue")
