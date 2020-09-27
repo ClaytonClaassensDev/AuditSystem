@@ -14,6 +14,9 @@ public class Report
     private String reportAuth;
     private LocalDate reportDate;
 
+    public Report() {
+    }
+
     private Report(Builder builder)
     {
         this.reportId = builder.reportId;
