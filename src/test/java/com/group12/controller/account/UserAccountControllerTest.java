@@ -38,6 +38,8 @@ public class UserAccountControllerTest {
     //need a base URl
     private static String baseURL = "http://localhost:8080/userAccount";
 
+
+    //This method is a generic method used by some tests used to create a userAccount before running the tests
     private UserAccount CreateUser() throws Exception
     {
         UserAccount userAccount = UserAccountFactory.createUserAccount("rachael@cput.ac.za", "rachael@cput.ac.za", true, date);
@@ -66,9 +68,9 @@ public class UserAccountControllerTest {
     public void b_read() {
         try {
             UserAccount userAccount = CreateUser();
-
             String url = baseURL + "/read?userId=" +  userAccount.getUserId();
             System.out.println("URL: " + url);
+
             ResponseEntity<UserAccount> accountResponse = restTemplate.getForEntity(url, UserAccount.class);
             assertEquals(userAccount.getUserId(), accountResponse.getBody().getUserId());
         }catch(Exception e)
@@ -124,6 +126,7 @@ public class UserAccountControllerTest {
     public void f_updateEmailAddress() {
         try{
             CreateUser();
+            // the update email address end point takes in multiple param. seperated by a & symbol.
             String url = baseURL + "/updateEmailAddress?email=rachael@cput.ac.za&existingPassword=rachael@cput.ac.za&newEmail=rachaelKlein@cput.ac.za&verifyNewEmail=rachaelKlein@cput.ac.za";
             System.out.println("URL: " + url);
             ResponseEntity updateResponse = restTemplate.exchange(url, HttpMethod.PUT, null, boolean.class);
