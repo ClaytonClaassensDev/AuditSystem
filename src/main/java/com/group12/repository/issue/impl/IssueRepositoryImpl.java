@@ -37,13 +37,23 @@ public class IssueRepositoryImpl implements IssueRepository {
     public Issue read(String id) {
 
         Issue issueToRead = null;
+        boolean found = false;
 
         for(Issue issue: this.issueDB){
-            if(issue.getIssueID().contentEquals(id)){
+
+            if(issue.getIssueID().equals(id)){
+
+                found = true;
+
+            } else found = false;
+
+            if(found == true){
 
                 issueToRead = issue;
+
             }
         }
+
         return issueToRead;
     }
 
@@ -51,17 +61,29 @@ public class IssueRepositoryImpl implements IssueRepository {
     public Issue update(Issue issue) {
 
         Issue dbUpdatedIssue = null;
+        boolean found = false;
 
         for(Issue i: this.issueDB){
 
-            if(i.getIssueID().matches(issue.getIssueID())){
+            if(i.getIssueID().equals(issue.getIssueID())){
 
-                this.issueDB.remove(i);
-                this.issueDB.add(issue);
+                found = true;
                 dbUpdatedIssue = issue;
 
+            }else {
+
+                found = false;
+            }
+
+            if(found == true) {
+
+                this.issueDB.remove(i);
+                this.issueDB.add(dbUpdatedIssue);
             }
         }
+
+
+
         return dbUpdatedIssue;
     }
 
@@ -72,10 +94,15 @@ public class IssueRepositoryImpl implements IssueRepository {
 
         for (Issue issue: this.issueDB){
 
-            if(issue.getIssueID().contentEquals(id)){
-                this.issueDB.remove(issue);
+            if(issue.getIssueID().equals(id)){
+
                 isDeleted = true;
-            }else isDeleted = false;
+
+            }else{
+
+                isDeleted = false;
+            }
+            this.issueDB.remove(id);
         }
         return isDeleted;
     }
