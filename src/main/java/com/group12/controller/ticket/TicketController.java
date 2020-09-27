@@ -19,12 +19,12 @@ public class TicketController {
     TicketServiceImpl ticketService;
     @Autowired
     IssueServiceImpl IssueService;
-    //Issue issue = IssueFactory.createIssue("Health","First Aid");//I create an Issue because I dont have the IssueController details yet
+    Issue issue = IssueFactory.createIssue("Health","First Aid");//I create an Issue because I dont have the IssueController details yet
 
     @PostMapping("/create")
     public Ticket create(@RequestBody Ticket ticket){
 
-        Issue issue = IssueService.getIssueByID(ticket.getTicketIssue().getIssueID());// This will be used once I can use Issue class
+        //Issue issue = (ticket.getTicketIssue().getIssueID());// This will be used once I can use Issue class
             Ticket newTick = null;
             newTick = TicketFactory.createTicket(issue);
 
