@@ -12,7 +12,7 @@ public class FacultyFactoryTest {
     @Before
     public void setup(){
         try{
-            faculty = FacultyFactory.createFactory("Engineering");
+            faculty = FacultyFactory.createFaculty("Engineering");
         }
         catch (Exception ex){
             Assert.fail();
