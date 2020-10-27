@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 
 public class DepartmentServiceImplTest {
 
-    private static DepartmentService service = DepartmentServiceImpl.getService();
+    private static DepartmentService service;
     private static Department department = DepartmentFactory.createDepartment("Multimedia Technology");
 
     @Test
