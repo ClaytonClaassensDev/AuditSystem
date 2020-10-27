@@ -1,12 +1,15 @@
 package com.group12.entity;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
-@JsonDeserialize(builder = Department.Builder.class)
+@Entity
 public class Department {
 
+
+    @Id
     private String depid;
     private String depName;
 

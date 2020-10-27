@@ -1,3 +1,4 @@
+/*
 package com.group12.repository.department.impl;
 
 import com.group12.factory.DepartmentFactory;
@@ -13,11 +14,13 @@ import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.*;
 
+*/
 /**
  * @author Enver Human - 216174929
  * Desc: Repository Implementation Test for Department
  * Date: 28 August 2020
- */
+ *//*
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
@@ -89,3 +92,4 @@ public class DepartmentRepositoryImplTest {
 
 
 }
+*/
