@@ -9,12 +9,13 @@ package com.group12.service.account.impl;
 import com.group12.entity.UserAccount;
 import com.group12.factory.UserAccountFactory;
 import com.group12.repository.account.UserAccountRepository;
-import com.group12.repository.account.impl.UserAccountRepositoryImpl;
 import com.group12.service.account.UserAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 // this service will not have access to the database, it will link to my repository
 // this service is a layer that gives you access to the repository
@@ -24,25 +25,14 @@ import java.time.LocalDate;
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    // the service here exposes a static service
-    private static UserAccountService service = null;
+
+    @Autowired
     private UserAccountRepository repository;
-
-    // here you will receive an instance of your repository once it has been instantiated
-    private UserAccountServiceImpl(){
-    this.repository = UserAccountRepositoryImpl.getInstance();
-    }
-
-    // checks to see if the service is null, if it is null it instantiates a service
-    public static UserAccountService getService(){
-        if(service == null)service = new UserAccountServiceImpl();
-        return service;
-    }
 
 
     @Override
     public Set<UserAccount> getAll() {
-        return this.repository.getAll();
+        return this.repository.findAll().stream().collect(Collectors.toSet());
     }
 
 
@@ -188,21 +178,26 @@ public class UserAccountServiceImpl implements UserAccountService {
     //CRUD methods
     @Override
     public UserAccount create(UserAccount userAccount) {
-        return this.repository.create(userAccount);
+        return this.repository.save(userAccount);
     }
 
     @Override
     public UserAccount read(String id) {
-        return this.repository.read(id);
+        return this.repository.findById(id).orElseGet(null);
     }
 
     @Override
     public UserAccount update(UserAccount userAccountUpdate) {
-        return this.repository.update(userAccountUpdate);
+        return this.repository.save(userAccountUpdate);
     }
 
     @Override
     public boolean delete(String entity) {
-        return this.repository.delete(entity);
+        this.repository.deleteById(entity);
+        if (this.repository.existsById(entity)) return  false;
+            else return  true;
+
     }
+
+
 }
