@@ -1,5 +1,7 @@
 package com.group12.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
@@ -8,8 +10,10 @@ import java.time.LocalDateTime;
  */
 
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
+    @Entity
 public class Issue{
 
+    @Id
     private String issueID = null;
     private LocalDateTime issueRaisedDate = null;
     private String issueArea;
