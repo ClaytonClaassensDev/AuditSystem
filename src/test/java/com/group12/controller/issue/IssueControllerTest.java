@@ -107,6 +107,7 @@ public class IssueControllerTest {
     @Test
     void a_deleteIssue() {
 
+
         Issue issueToDelete = IssueFactory.createIssue("IssueToDeleteArea","IssueToDeleteDescription");
 
         ResponseEntity<Issue> expectedIssue = restTemplate.postForEntity(url+"/createIssue", issueToDelete,Issue.class);

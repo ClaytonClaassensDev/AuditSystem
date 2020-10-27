@@ -57,6 +57,7 @@ public class IssueServiceImpl implements IssueService {
 
         Issue validatedIssue = null;
 
+
         try {
 
             if (this.issueRepository.existsById(issueID)) {

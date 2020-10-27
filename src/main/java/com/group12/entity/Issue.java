@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
  */
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
     @Entity
-public class Issue{
+
+    public class Issue{
 
     @Id
     private String issueID = null;
