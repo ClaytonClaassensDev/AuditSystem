@@ -100,14 +100,14 @@ public class IssueController {
         }
     }
 
-    @GetMapping(value = "/resolveIssue")
+    @PutMapping(value = "/resolveIssue")
     public ResponseEntity<Issue> resolveIssue(@RequestParam String issueID){
 
-        Issue resolvedIssue = issueService.resolveIssue(issueID);
+        Issue resolvedIssue = issueService.read(issueID);
 
-        System.out.printf(resolvedIssue.toString());
+        issueService.resolveIssue(resolvedIssue.getIssueID());
 
-        if(resolvedIssue != null && resolvedIssue.getIsResolved() == true){
+        if(resolvedIssue != null){
 
             return ResponseEntity.ok(resolvedIssue);
 
@@ -117,14 +117,14 @@ public class IssueController {
 
     //validate, open, close, getAll
 
-    @GetMapping(value = "/validateIssue")
+    @PutMapping(value = "/validateIssue")
     public ResponseEntity<Issue> validateIssue(@RequestParam String issueID){
 
         Issue validatedIssue = issueService.read(issueID);
 
-        if(validatedIssue != null && validatedIssue.getIsResolved() == true){
+        issueService.validateIssue(validatedIssue.getIssueID());
 
-            issueService.validateIssue(issueID);
+        if(validatedIssue != null && validatedIssue.getIsResolved() == true){
 
             return ResponseEntity.ok(validatedIssue);
 
@@ -132,10 +132,11 @@ public class IssueController {
 
     }
 
-    @GetMapping(value = "/openIssue")
+    @PutMapping(value = "/openIssue")
     public ResponseEntity<Issue> openIssue(@RequestParam String issueID){
 
-        Issue openedIssue = issueService.openIssue(issueID);
+        Issue openedIssue = issueService.read(issueID);
+        issueService.openIssue(issueID);
 
         if(openedIssue != null){
 
@@ -146,10 +147,12 @@ public class IssueController {
 
     }
 
-    @GetMapping(value = "/closeIssue")
+    @PutMapping(value = "/closeIssue")
     public ResponseEntity<Issue> closeIssue(@RequestParam String issueID){
 
-        Issue closedIssue = issueService.closeIssue(issueID);
+        Issue closedIssue = issueService.read(issueID);
+
+        issueService.closeIssue(issueID);
 
         if(closedIssue != null){
 
