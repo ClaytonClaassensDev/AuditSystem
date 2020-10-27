@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
  * @author: Clayton Claassens
  * @desc: entity.Issue Entity --> Builder Pattern
  */
-
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
     @Entity
 public class Issue{

@@ -116,7 +116,6 @@ public class IssueController {
     }
 
     //validate, open, close, getAll
-
     @PutMapping(value = "/validateIssue")
     public ResponseEntity<Issue> validateIssue(@RequestParam String issueID){
 

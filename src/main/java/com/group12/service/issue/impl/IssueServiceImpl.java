@@ -50,7 +50,6 @@ public class IssueServiceImpl implements IssueService {
         }
 
         return resolvedIssue;
-
     }
 
     @Override

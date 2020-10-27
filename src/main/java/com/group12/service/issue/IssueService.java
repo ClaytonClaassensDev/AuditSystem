@@ -20,5 +20,4 @@ public interface IssueService extends IService<Issue, String> {
 
     Issue closeIssue(String issueID);
 
-
 }

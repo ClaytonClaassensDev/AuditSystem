@@ -102,7 +102,6 @@ public class IssueControllerTest {
         assertNotNull(updatedIssueResponse);
         assertNotEquals(issueHttpEntity, updatedIssueResponse);
         assertEquals(issueHttpEntity.getBody().getIssueID(), updatedIssueResponse.getBody().getIssueID());
-
     }
 
     @Test
@@ -124,7 +123,6 @@ public class IssueControllerTest {
 
         assertTrue(isDeleted.getBody());
         assertEquals(isDeleted.getStatusCode(), HttpStatus.OK);
-
     }
 
 

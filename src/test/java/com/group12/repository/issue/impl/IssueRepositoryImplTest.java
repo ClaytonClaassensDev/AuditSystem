@@ -1,4 +1,4 @@
-//package com.group12.repository.issue.impl;
+package com.group12.repository.issue.impl;//package com.group12.repository.issue.impl;
 //
 //import com.group12.entity.Issue;
 //import com.group12.factory.IssueFactory;

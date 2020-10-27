@@ -68,7 +68,6 @@ public class IssueServiceImplTest {
 
         System.out.println(e.getMessage());
         }
-
     }
 
     @Test
