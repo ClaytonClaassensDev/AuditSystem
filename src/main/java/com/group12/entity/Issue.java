@@ -1,15 +1,19 @@
 package com.group12.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
  * @author: Clayton Claassens
  * @desc: entity.Issue Entity --> Builder Pattern
  */
-
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
-public class Issue{
+    @Entity
 
+    public class Issue{
+
+    @Id
     private String issueID = null;
     private LocalDateTime issueRaisedDate = null;
     private String issueArea;

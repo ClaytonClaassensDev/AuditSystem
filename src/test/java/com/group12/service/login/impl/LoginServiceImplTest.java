@@ -5,7 +5,6 @@ import com.group12.entity.UserAccount;
 import com.group12.factory.LoginFactory;
 import com.group12.factory.UserAccountFactory;
 import com.group12.repository.account.UserAccountRepository;
-import com.group12.repository.account.impl.UserAccountRepositoryImpl;
 import com.group12.service.login.LoginService;
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
@@ -40,7 +39,7 @@ public class LoginServiceImplTest
         {
             e.printStackTrace();
         }
-        UserAccount createdUserAccount = repository.create(userAccount);
+        UserAccount createdUserAccount = repository.save(userAccount);
         Login createdLogin = service.create(login);
         assertEquals(login.getLoginID(), createdLogin.getLoginID());
         assertEquals(userAccount.getUserId(), createdUserAccount.getUserId());
