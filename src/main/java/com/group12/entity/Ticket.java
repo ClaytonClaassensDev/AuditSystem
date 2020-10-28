@@ -1,5 +1,6 @@
 package com.group12.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 /** Author: Stefano Ngantweni
@@ -8,13 +9,20 @@ import java.time.LocalDate;
  *   Description: Entity for Ticket
  */
 
+@Entity
 public class Ticket implements Serializable {
+    @Id
     private String ticketId;
     private String ticketDesc;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "issueID", referencedColumnName = "issueID")
     private Issue ticketIssue;
+
     private LocalDate ticketDate;
 
-    private Ticket(){
+    protected Ticket(){
 
     }
 
