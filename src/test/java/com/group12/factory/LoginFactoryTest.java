@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
  * Desc: Factory test for Login
  * Date: 3 July 2020
  */
-
+@Deprecated
 public class LoginFactoryTest
 {
 

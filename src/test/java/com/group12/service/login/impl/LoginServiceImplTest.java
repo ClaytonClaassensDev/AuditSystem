@@ -13,13 +13,13 @@ import org.junit.runners.MethodSorters;
 
 import java.time.LocalDate;
 import java.util.Set;
-
+@Deprecated
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LoginServiceImplTest
 {
 
     private static LoginService service = LoginServiceImpl.getService();
-    private static UserAccountRepository repository = UserAccountRepositoryImpl.getInstance();
+    private static UserAccountRepository repository;
     private static Login login = LoginFactory
             .createLogin("rachaelk.private@gmail.com", "12345678rR1@!");
     static LocalDate date = LocalDate.now();
