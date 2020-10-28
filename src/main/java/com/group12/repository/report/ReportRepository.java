@@ -2,6 +2,8 @@ package com.group12.repository.report;
 
 import com.group12.entity.Report;
 import com.group12.repository.IRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 /**
@@ -9,7 +11,8 @@ import java.util.Set;
  * Desc: Repository Implementation for report
  * Date: 24 August 2020
  */
-public interface ReportRepository extends IRepository<Report, String>
+@Repository
+public interface ReportRepository extends JpaRepository<Report, String>
 {
-    Set<Report> getAll();
+
 }

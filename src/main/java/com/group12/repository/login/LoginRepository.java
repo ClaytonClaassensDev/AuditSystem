@@ -9,6 +9,7 @@ import java.util.Set;
  * Desc: Repository Interface for login
  * Date: 24 August 2020
  */
+@Deprecated
 public interface LoginRepository extends IRepository<Login, String> {
     Set<Login> getAll();
 }

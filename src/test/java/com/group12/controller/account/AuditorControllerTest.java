@@ -6,6 +6,7 @@ package com.group12.controller.account;
 import com.group12.entity.Auditor;
 import com.group12.factory.AuditorFactory;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;

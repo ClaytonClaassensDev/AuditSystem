@@ -1,12 +1,14 @@
 package com.group12.service.faculty.impl;
 
 import com.group12.entity.Faculty;
-import com.group12.repository.faculty.impl.FacultyRepositoryImpl;
+import com.group12.repository.faculty.FacultyRepository;
 import com.group12.service.faculty.FacultyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**  Author: Ebenezer Mathebula
  *   Student no: 217301827
@@ -18,29 +20,13 @@ import java.util.Set;
 @Service
 public class FacultyServiceImpl implements FacultyService {
 
-    private static FacultyService service = null;
-
-    private FacultyRepositoryImpl repository;
-
-
-    // Faculty service constructor
-    private FacultyServiceImpl(){
-        // instantiate the repository instance
-        this.repository = FacultyRepositoryImpl.getRepository();
-    }
-
-    // Returns the service singleton instance
-    public static FacultyService getService(){
-        if(service == null){
-            service = new FacultyServiceImpl();
-        }
-        return service;
-    }
-
+    @Autowired
+    private FacultyRepository repository;
 
     @Override
     public Set<Faculty> getAll() {
-        return this.repository.getAllFaculties();
+        Set<Faculty> answer = this.repository.findAll().stream().collect(Collectors.toSet());
+        return answer;
     }
 
 
@@ -64,7 +50,7 @@ public class FacultyServiceImpl implements FacultyService {
     public Faculty getFacultyByName(String name) {
         Faculty faculty = null;
 
-        for (Faculty fac : this.repository.getAllFaculties()){
+        for (Faculty fac : this.repository.findAll()){
             if(fac.getFacultyName().equalsIgnoreCase(name)){
                 faculty = fac;
             }
@@ -75,22 +61,28 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public Faculty create(Faculty faculty) {
-        return this.repository.create(faculty);
+        return this.repository.save(faculty);
     }
 
     @Override
     public Faculty read(String id) {
-        return this.repository.read(id);
+        return this.repository.findById(id).orElseGet(null);
     }
 
     @Override
     public Faculty update(Faculty faculty) {
-        return this.repository.update(faculty);
+        if(this.repository.existsById(faculty.getFacultyId())){
+            return this.repository.save(faculty);
+        }
+        return null;
     }
 
     @Override
     public boolean delete(String id) {
-        return this.repository.delete(id);
+        this.repository.deleteById(id);
+        boolean isDeleted = this.repository.existsById(id)?false:true;
+
+        return isDeleted;
     }
 
 }

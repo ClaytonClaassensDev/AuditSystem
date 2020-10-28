@@ -2,11 +2,14 @@ package com.group12.service.department.impl;
 
 import com.group12.entity.Department;
 import com.group12.repository.department.DepartmentRepository;
-import com.group12.repository.department.impl.DepartmentRepositoryImpl;
+
 import com.group12.service.department.DepartmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * @author Enver Human - 216174929
  * Desc: Service Implementation for Department
@@ -17,20 +20,9 @@ import java.util.Set;
 public class DepartmentServiceImpl implements DepartmentService
 {
 
-    private static DepartmentService service = null;
+   @Autowired
     private DepartmentRepository repository;
 
-    private DepartmentServiceImpl()
-    {
-        this.repository = DepartmentRepositoryImpl.getRepository();
-    }
-
-
-    public static DepartmentService getService()
-    {
-        if (service == null) service = new DepartmentServiceImpl();
-        return service;
-    }
 
 
 
@@ -38,34 +30,37 @@ public class DepartmentServiceImpl implements DepartmentService
     @Override
     public Department create(Department department)
     {
-        return this.repository.create(department);
+        return this.repository.save(department);
     }
 
     // This method searches for the specified department object using id
     @Override
     public Department read(String id)
     {
-        return this.repository.read(id);
+        return this.repository.findById(id).orElseGet(null);
     }
 
     // This method changes and updates specific department object
     @Override
-    public Department update(Department department)
+    public Department update(Department departmentUpdate)
     {
-        return this.repository.update(department);
+        return this.repository.save(departmentUpdate);
     }
 
     // This method deletes a department object in repository using id
     @Override
-    public boolean delete(String id)
+    public boolean delete(String entity)
     {
-        return this.repository.delete(id);
+         this.repository.deleteById(entity);
+        if (this.repository.existsById(entity)) return  false;
+        else return  true;
+
     }
 
     // This method retrieves all the department objects in the repository
     @Override
     public Set<Department> getAll()
     {
-        return this.repository.getAll();
+        return this.repository.findAll().stream().collect(Collectors.toSet());
     }
 }

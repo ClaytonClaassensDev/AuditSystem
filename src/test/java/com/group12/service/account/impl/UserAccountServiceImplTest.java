@@ -8,8 +8,6 @@ package com.group12.service.account.impl;
 
 import com.group12.entity.UserAccount;
 import com.group12.factory.UserAccountFactory;
-import com.group12.repository.account.UserAccountRepository;
-import com.group12.repository.account.impl.UserAccountRepositoryImpl;
 import com.group12.service.account.UserAccountService;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
@@ -25,7 +23,7 @@ public class UserAccountServiceImplTest {
 
     static LocalDate date = LocalDate.now();
     //singleton which allows access to the service
-    private static UserAccountService service = UserAccountServiceImpl.getService();
+    private static UserAccountService service;
 
     private static UserAccount userAccount;
 

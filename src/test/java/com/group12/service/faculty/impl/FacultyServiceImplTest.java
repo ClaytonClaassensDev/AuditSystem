@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -19,7 +20,8 @@ import java.util.Set;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacultyServiceImplTest{
 
-    private static FacultyService service = FacultyServiceImpl.getService();
+    @Autowired
+    private static FacultyService service;
 
     // Instances to test with
     private static Faculty engineering = null;

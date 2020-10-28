@@ -2,11 +2,13 @@ package com.group12.service.report.impl;
 
 import com.group12.entity.Report;
 import com.group12.repository.report.ReportRepository;
-import com.group12.repository.report.impl.ReportRepositoryImpl;
 import com.group12.service.report.ReportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * @author Bradley van der Westhuizen - 217218903
  * Desc: Service Implementation for report
@@ -17,53 +19,45 @@ import java.util.Set;
 public class ReportServiceImpl implements ReportService
 {
 
-    private static ReportService service = null;
+    @Autowired
     private ReportRepository repository;
-
-    private ReportServiceImpl()
-    {
-        this.repository = ReportRepositoryImpl.getRepository();
-    }
-
-    // This method uses the Singleton pattern to instantiate only one object
-    public static ReportService getService()
-    {
-        if (service == null) service = new ReportServiceImpl();
-        return service;
-    }
 
     // This method calls the create method in the ReportRepository class and adds a new report object
     @Override
     public Report create(Report report)
     {
-        return this.repository.create(report);
+        return this.repository.save(report);
     }
 
     // This method calls the read method in the ReportRepository class and searches for the specified report
     @Override
     public Report read(String id)
     {
-        return this.repository.read(id);
+        return this.repository.findById(id).orElse(null);
     }
 
     // This method calls the update method in the ReportRepository class and changes the details of the specified report
     @Override
     public Report update(Report report)
     {
-        return this.repository.update(report);
+        return create(report);
     }
 
     // This method calls the delete method in the ReportRepository class and deletes the specified report object
     @Override
     public boolean delete(String id)
     {
-        return this.repository.delete(id);
+        this.repository.deleteById(id);
+        if (this.repository.existsById(id))
+            return false;
+        else
+            return true;
     }
 
     // This method retrieves all the report objects in the repository
     @Override
     public Set<Report> getAll()
     {
-        return this.repository.getAll();
+        return this.repository.findAll().stream().collect(Collectors.toSet());
     }
 }
