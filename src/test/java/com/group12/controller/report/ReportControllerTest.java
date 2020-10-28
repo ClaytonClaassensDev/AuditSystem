@@ -4,6 +4,7 @@ import com.group12.entity.Login;
 import com.group12.entity.Report;
 import com.group12.factory.ReportFactory;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -64,6 +65,7 @@ public class ReportControllerTest
     }
 
     @Test
+    @Ignore
     public void e_delete()
     {
         String url = baseURL + "/delete/" + report.getReportId();

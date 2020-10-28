@@ -2,6 +2,8 @@ package com.group12.repository.ticket;
 
 import com.group12.entity.Ticket;
 import com.group12.repository.IRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 /**
@@ -9,7 +11,6 @@ import java.util.Set;
  * Desc: Repository Interface for ticket
  * Date: 28 August 2020
  */
-
-public interface TicketRepository extends IRepository<Ticket, String> {
-        Set<Ticket> getAll();
+    @Repository
+public interface TicketRepository extends JpaRepository<Ticket, String>{
 }

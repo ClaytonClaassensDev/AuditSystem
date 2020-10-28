@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
  * Desc: Repository Implementation Test for login
  * Date: 24 August 2020
  */
+@Deprecated
 public class LoginRepositoryImplTest
 {
 

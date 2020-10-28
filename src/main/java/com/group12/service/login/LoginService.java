@@ -10,6 +10,7 @@ import java.util.Set;
  * Desc: Service Interface for login
  * Date: 28 August 2020
  */
+@Deprecated
 public interface LoginService extends IService<Login, String>
 {
     Set<Login> getAll();
