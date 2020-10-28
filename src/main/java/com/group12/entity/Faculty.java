@@ -1,5 +1,7 @@
 package com.group12.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 /** Author: Ebenezer Mathebula
@@ -9,12 +11,14 @@ import java.time.LocalDate;
  */
 
 
+@Entity
 public class Faculty {
 
+    @Id
     private String facultyId;
     private String facultyName;
 
-    private Faculty(){}
+    protected Faculty() {}
 
     private Faculty(Builder builder){
         this.facultyId = builder.facultyId;
@@ -37,7 +41,6 @@ public class Faculty {
                 '}';
     }
 
-
     // Inner Class
     public static class Builder {
 
@@ -59,7 +62,6 @@ public class Faculty {
             this.facultyName = faculty.facultyName;
             return this;
         }
-
 
         public Faculty build(){
             return new Faculty(this);
