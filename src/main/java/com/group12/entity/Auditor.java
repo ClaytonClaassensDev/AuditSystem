@@ -1,18 +1,26 @@
 package com.group12.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
+
 /**  Author: Limpho Ranamane
  *   Date: 02-07-2020
  *   Description: Auditor entity using Builder pattern
  */
 
+//change to class, noted as entity, constructor modified to 'protected', map to make PK--make equals() and hashcode()
+@Entity
 public class Auditor {
 
-    private String auditorID,auditorFirstName, auditorSurname, auditorCellPhone;
+    @Id
+    private String auditorID;
+    private String auditorFirstName, auditorSurname, auditorCellPhone;
 
-    private Auditor() {
+    protected Auditor() {
     }
 
-    private Auditor(Builder builder) {
+    private Auditor(com.group12.entity.Auditor.Builder builder) {
 
         this.auditorID = builder.auditorID;
         this.auditorFirstName = builder.auditorFirstName;
@@ -53,27 +61,27 @@ public class Auditor {
         private String auditorID, auditorFirstName, auditorSurname, auditorCellPhone;
 
 
-        public Builder setAuditorID(String auditorID) {
+        public com.group12.entity.Auditor.Builder setAuditorID(String auditorID) {
             this.auditorID = auditorID;
             return this;
         }
 
-        public Builder setAuditorFirstName(String auditorFirstName) {
+        public com.group12.entity.Auditor.Builder setAuditorFirstName(String auditorFirstName) {
             this.auditorFirstName = auditorFirstName;
             return this;
         }
 
-        public Builder setAuditorSurname(String auditorSurname) {
+        public com.group12.entity.Auditor.Builder setAuditorSurname(String auditorSurname) {
             this.auditorSurname = auditorSurname;
             return this;
         }
 
-        public Builder setAuditorCellPhone(String auditorCellPhone) {
+        public com.group12.entity.Auditor.Builder setAuditorCellPhone(String auditorCellPhone) {
             this.auditorCellPhone = auditorCellPhone;
             return this;
         }
 
-        public Builder copy(Auditor auditor) {
+        public com.group12.entity.Auditor.Builder copy(com.group12.entity.Auditor auditor) {
             this.auditorID = auditor.auditorID;
             this.auditorFirstName = auditor.auditorFirstName;
             this.auditorSurname = auditor.auditorSurname;
@@ -81,12 +89,26 @@ public class Auditor {
             return this;
         }
 
-        public Auditor build() {
+        public com.group12.entity.Auditor build() {
 
-            return new Auditor(this);
+            return new com.group12.entity.Auditor(this);
 
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        com.group12.entity.Auditor auditor = (com.group12.entity.Auditor) o;
+        return auditorID.equals(auditor.auditorID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(auditorID);
+    }
 }
+
 
 

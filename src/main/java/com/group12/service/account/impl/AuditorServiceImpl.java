@@ -2,11 +2,11 @@ package com.group12.service.account.impl;
 
 import com.group12.entity.Auditor;
 import com.group12.repository.account.AuditorRepository;
-import com.group12.repository.account.impl.AuditorRepositoryImpl;
 import com.group12.service.account.AuditorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**  Author: Limpho Ranamane
  *   Date: 01-09-2020
@@ -16,44 +16,34 @@ import java.util.Set;
 @Service //acts as a service over the internet
 public class AuditorServiceImpl implements AuditorService {
 
+    @Autowired //enforces singleton
     private AuditorRepository auditorRepository;
-    private static AuditorService auditorService = null;
 
-    private AuditorServiceImpl() {
-        this.auditorRepository = AuditorRepositoryImpl.getAuditorRepository(); //initializing AuditorRepository
-    }
-
-    //singleton to only access and enforce a single entry to the AuditorRepository
-    //enforces only one instance of this class
-    public static AuditorService getAuditorService(){
-        if(auditorService ==null) auditorService =new AuditorServiceImpl();
-        return auditorService;
-    }
-
-    //the following methods interact with the repository layer (has access to the DB) and send requests to it and the repository layer responds to those requests
 
     @Override
     public Auditor create(Auditor t) {
-        return this.auditorRepository.create(t);
+        return this.auditorRepository.save(t);
     }
 
     @Override
     public Auditor read(String s) {
-        return this.auditorRepository.read(s);
+        return this.auditorRepository.findById(s).orElseGet(null);
     }
 
     @Override
     public Auditor update(Auditor t) {
-        return this.auditorRepository.update(t);
+        return this.auditorRepository.save(t);
     }
 
     @Override
     public boolean delete(String s) {
-        return this.auditorRepository.delete(s);
+        this.auditorRepository.deleteById(s);
+        if (this.auditorRepository.existsById(s)) return false;
+        else return true;
     }
 
     @Override
     public Set<Auditor> getAll() {
-        return this.auditorRepository.getAll();
+        return this.auditorRepository.findAll().stream().collect(Collectors.toSet());
     }
 }

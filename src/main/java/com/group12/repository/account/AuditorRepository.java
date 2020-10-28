@@ -2,6 +2,9 @@ package com.group12.repository.account;
 
 import com.group12.entity.Auditor;
 import com.group12.repository.IRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.Set;
 
 /**  Author: Limpho Ranamane
@@ -9,8 +12,7 @@ import java.util.Set;
  *   Description: Interface directly responsible for handling the call for all values in the Auditor DB
  */
 
-public interface AuditorRepository extends IRepository<Auditor, String> {
-    Set<Auditor> getAll();
-
+@Repository
+public interface AuditorRepository extends JpaRepository<Auditor, String> {
 
 }
