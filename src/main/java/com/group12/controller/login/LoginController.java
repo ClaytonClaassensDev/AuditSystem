@@ -16,6 +16,7 @@ import java.util.Set;
  * Desc: Controller for login
  * Date: 22 September 2020
  */
+@Deprecated
 @RestController
 @RequestMapping("/login")
 public class LoginController

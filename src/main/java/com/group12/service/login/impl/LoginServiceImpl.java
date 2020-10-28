@@ -14,6 +14,7 @@ import java.util.Set;
  * Desc: Service Implementation for login
  * Date: 28 August 2020
  */
+@Deprecated
 @Service
 public class LoginServiceImpl implements LoginService
 {
