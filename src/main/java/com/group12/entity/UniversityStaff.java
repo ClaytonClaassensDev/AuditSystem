@@ -1,4 +1,7 @@
 package com.group12.entity;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.Objects;
 
 /**  Author: Limpho Ranamane
  *   Date: 02-07-2020
@@ -6,11 +9,14 @@ package com.group12.entity;
  */
 
 
+
+@Entity
 public class UniversityStaff {
+    @Id
+    private String universityStaffID;
+    private String universityStaffFirstName, universityStaffSurname, universityStaffCellPhone;
 
-    private String universityStaffID, universityStaffFirstName, universityStaffSurname, universityStaffCellPhone;
-
-    private UniversityStaff(){}
+    protected UniversityStaff(){}
 
     private UniversityStaff(Builder builder) {
 
@@ -87,6 +93,20 @@ public class UniversityStaff {
 
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UniversityStaff that = (UniversityStaff) o;
+        return universityStaffID.equals(that.universityStaffID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(universityStaffID);
+    }
 }
+
 
 
