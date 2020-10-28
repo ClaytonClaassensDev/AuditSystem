@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
  * @desc: entity.Issue Entity --> Builder Pattern
  */
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
-    @Entity
+@Entity
 
-    public class Issue{
+public class Issue{
 
     @Id
     private String issueID = null;
@@ -158,7 +158,7 @@ import java.time.LocalDateTime;
             this.isValidated = issue.isValidated;
             return this;
         }
-        
+
 
         public Issue build(){
 

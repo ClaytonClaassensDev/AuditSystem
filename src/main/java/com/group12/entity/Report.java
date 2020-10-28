@@ -1,20 +1,24 @@
 package com.group12.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author Bradley van der Westhuizen - 217218903
  * Desc: Entity for report
  * Date: 3 July 2020
  */
-
+@Entity
 public class Report
 {
+    @Id
     private String reportId;
     private String reportAuth;
     private LocalDate reportDate;
 
-    public Report() {
+    protected Report() {
     }
 
     private Report(Builder builder)
@@ -81,5 +85,18 @@ public class Report
         {
             return new Report(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Report report = (Report) o;
+        return reportId.equals(report.reportId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reportId);
     }
 }

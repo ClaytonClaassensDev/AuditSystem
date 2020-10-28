@@ -5,12 +5,12 @@ import com.group12.entity.Ticket;
 import com.group12.factory.IssueFactory;
 import com.group12.factory.TicketFactory;
 import com.group12.repository.ticket.TicketRepository;
-import com.group12.repository.ticket.impl.TicketRepositoryImpl;
 import com.group12.service.ticket.TicketService;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -21,7 +21,8 @@ import static org.junit.Assert.*;
  */
 public class TicketServiceImplTest {
 
-    private static TicketService service = TicketServiceImpl.getService();//
+    @Autowired
+    private static TicketService service;//
     private static Issue issue = IssueFactory.createIssue("Health","First aid kits need replacing");
     private static Ticket ticket = TicketFactory.createTicket(issue);
     private static Issue newIss = new Issue.Builder().copy(issue).setIssueStatus(true).build();
@@ -74,7 +75,7 @@ public class TicketServiceImplTest {
                 .setTicketIssue(newIss)
                 .build();
         updated = service.update(updated);
-        Assert.assertEquals(true,updated.getTicketIssue().getIssueStatus());
+        Assert.assertEquals(newIss.getIssueID(),updated.getTicketIssue());
         System.out.println("Updated: "+ updated);
     }
 
