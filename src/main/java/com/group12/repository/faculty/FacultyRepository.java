@@ -2,6 +2,8 @@ package com.group12.repository.faculty;
 
 import com.group12.entity.Faculty;
 import com.group12.repository.IRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
@@ -11,10 +13,7 @@ import java.util.Set;
  * Date: July 2020
  */
 
-public interface FacultyRepository extends IRepository<Faculty, String> {
-
-    public Set<Faculty> getAllFaculties();
-
-    public int size();      // get the size of the database
+@Repository
+public interface FacultyRepository extends JpaRepository<Faculty, String> {
 
 }
