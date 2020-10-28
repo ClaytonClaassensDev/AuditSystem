@@ -20,7 +20,7 @@ public class Auditor {
     protected Auditor() {
     }
 
-    private Auditor(com.group12.entity.Auditor.Builder builder) {
+    private Auditor(Builder builder) {
 
         this.auditorID = builder.auditorID;
         this.auditorFirstName = builder.auditorFirstName;
@@ -61,27 +61,27 @@ public class Auditor {
         private String auditorID, auditorFirstName, auditorSurname, auditorCellPhone;
 
 
-        public com.group12.entity.Auditor.Builder setAuditorID(String auditorID) {
+        public Builder setAuditorID(String auditorID) {
             this.auditorID = auditorID;
             return this;
         }
 
-        public com.group12.entity.Auditor.Builder setAuditorFirstName(String auditorFirstName) {
+        public Builder setAuditorFirstName(String auditorFirstName) {
             this.auditorFirstName = auditorFirstName;
             return this;
         }
 
-        public com.group12.entity.Auditor.Builder setAuditorSurname(String auditorSurname) {
+        public Builder setAuditorSurname(String auditorSurname) {
             this.auditorSurname = auditorSurname;
             return this;
         }
 
-        public com.group12.entity.Auditor.Builder setAuditorCellPhone(String auditorCellPhone) {
+        public Builder setAuditorCellPhone(String auditorCellPhone) {
             this.auditorCellPhone = auditorCellPhone;
             return this;
         }
 
-        public com.group12.entity.Auditor.Builder copy(com.group12.entity.Auditor auditor) {
+        public Builder copy(com.group12.entity.Auditor auditor) {
             this.auditorID = auditor.auditorID;
             this.auditorFirstName = auditor.auditorFirstName;
             this.auditorSurname = auditor.auditorSurname;
@@ -89,9 +89,9 @@ public class Auditor {
             return this;
         }
 
-        public com.group12.entity.Auditor build() {
+        public Auditor build() {
 
-            return new com.group12.entity.Auditor(this);
+            return new Auditor(this);
 
         }
     }

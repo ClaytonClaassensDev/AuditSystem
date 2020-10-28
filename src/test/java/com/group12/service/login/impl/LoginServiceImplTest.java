@@ -13,13 +13,21 @@
 //
 //import java.time.LocalDate;
 //import java.util.Set;
+<<<<<<< HEAD
 //
+=======
+//@Deprecated
+>>>>>>> b0f0339931ce729b745b2dfadc17fbb5235bb96e
 //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 //public class LoginServiceImplTest
 //{
 //
 //    private static LoginService service = LoginServiceImpl.getService();
+<<<<<<< HEAD
 //    private static UserAccountRepository repository = UserAccountRepositoryImpl.getInstance();
+=======
+//    private static UserAccountRepository repository;
+>>>>>>> b0f0339931ce729b745b2dfadc17fbb5235bb96e
 //    private static Login login = LoginFactory
 //            .createLogin("rachaelk.private@gmail.com", "12345678rR1@!");
 //    static LocalDate date = LocalDate.now();
@@ -80,4 +88,8 @@
 //        assertEquals(1, logins.size());
 //        System.out.println("All Logins: " + logins);
 //    }
+<<<<<<< HEAD
 //}
+=======
+//}
+>>>>>>> b0f0339931ce729b745b2dfadc17fbb5235bb96e
