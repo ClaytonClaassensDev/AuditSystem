@@ -1,7 +1,6 @@
 package com.group12.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -10,10 +9,11 @@ import java.time.LocalDateTime;
  */
 //NOTE!! issueStatus = open when true || issueStatus = false when closed
     @Entity
-
+    @Table(name ="issue")
     public class Issue{
 
     @Id
+    @Column(name = "issueID")
     private String issueID = null;
     private LocalDateTime issueRaisedDate = null;
     private String issueArea;
@@ -21,6 +21,10 @@ import java.time.LocalDateTime;
     private boolean isResolved = false;
     private boolean isValidated = false;
     private String issueDescription  = null;
+
+    @OneToOne(mappedBy = "issue")
+    private Ticket ticket;
+
     private LocalDateTime issueResolvedDate;//This date should be set once an Issue is resolved.
 
     public Issue(){
