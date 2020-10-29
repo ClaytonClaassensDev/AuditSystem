@@ -6,10 +6,10 @@ package com.group12.repository.account;
  */
 
 import com.group12.entity.UserAccount;
-import com.group12.repository.IRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Set;
+@Repository
+public interface UserAccountRepository extends JpaRepository<UserAccount,String>{
 
-public interface UserAccountRepository extends IRepository <UserAccount,String> {
-    Set<UserAccount> getAll();
 }

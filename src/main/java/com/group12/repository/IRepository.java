@@ -10,6 +10,7 @@ package com.group12.repository;
 
 //EntityType is the type
 //ID is the datatype of the EntityType
+     @Deprecated
 public interface IRepository <EntityType,ID> {
      EntityType create(EntityType t);
      EntityType read(ID id);

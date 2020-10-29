@@ -6,6 +6,7 @@ import com.group12.service.report.ReportService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -14,7 +15,9 @@ import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportServiceImplTest
 {
-    private static ReportService service = ReportServiceImpl.getService();
+    @Autowired
+    private ReportService service;
+
     private static Report report = ReportFactory.createReport("Brian");
 
     @Test

@@ -1,12 +1,12 @@
 package com.group12.repository.issue;
 
 import com.group12.entity.Issue;
-import com.group12.repository.IRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Set;
+@Repository
+public interface IssueRepository extends JpaRepository<Issue, String> {
 
-public interface IssueRepository extends IRepository<Issue, String> {
 
-    Set<Issue> getAll();
 
 }

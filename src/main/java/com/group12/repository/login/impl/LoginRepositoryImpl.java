@@ -10,6 +10,7 @@ import java.util.Set;
  * Desc: Repository Implementation for login
  * Date: 24 August 2020
  */
+@Deprecated
 public class LoginRepositoryImpl implements LoginRepository {
 
     public static LoginRepository repository = null;

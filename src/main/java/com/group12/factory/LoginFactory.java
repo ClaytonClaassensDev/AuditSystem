@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * Desc: Factory for login
  * Date: 3 July 2020
  */
-
+@Deprecated
 public class LoginFactory
 {
     public static Login createLogin(String emailAddress, String password)

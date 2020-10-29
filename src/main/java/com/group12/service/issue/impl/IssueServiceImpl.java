@@ -2,37 +2,25 @@ package com.group12.service.issue.impl;
 
 import com.group12.entity.Issue;
 import com.group12.repository.issue.IssueRepository;
-import com.group12.repository.issue.impl.IssueRepositoryImpl;
 import com.group12.service.issue.IssueService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class IssueServiceImpl implements IssueService {
 
-    private static IssueService issueService = null;
+    @Autowired
     private IssueRepository issueRepository;
-
-    private IssueServiceImpl(){
-
-        this.issueRepository = IssueRepositoryImpl.getIssueRepositoryInstance();
-    }
-
-    public static IssueService getInstance(){
-
-        if(issueService == null){
-
-            issueService = new IssueServiceImpl();
-        }
-        return issueService;
-    }
 
     @Override
     public Set<Issue> getAll() {
 
-        return this.issueRepository.getAll();
+        return this.issueRepository.findAll().stream().collect(Collectors.toSet());
     }
 
     //issueStatus true=open
@@ -40,19 +28,20 @@ public class IssueServiceImpl implements IssueService {
     public Issue resolveIssue(String issueID) {
 
         Issue resolvedIssue = null;
+
         try {
 
+            if (this.issueRepository.existsById(issueID)) {
 
-            Issue issue = this.issueRepository.read(issueID);
+                Issue issueToResolve = this.issueRepository.getOne(issueID);
 
-            if (issueID != null) {
+                    resolvedIssue = new Issue.Builder().copy(issueToResolve)
+                            .setIsResolved(true)
+                            .setIssueResolvedDate(LocalDateTime.now())
+                            .build();
 
-                resolvedIssue = new Issue.Builder().copy(issue)
-                        .setIsResolved(true)
-                        .setIssueResolvedDate(LocalDateTime.now())
-                        .build();
+                    this.issueRepository.save(resolvedIssue);
 
-                this.issueRepository.update(resolvedIssue);
             }
 
         }catch (Exception e){
@@ -70,17 +59,22 @@ public class IssueServiceImpl implements IssueService {
 
 
         try {
-            Issue issue = this.issueRepository.read(issueID);
 
-            if (issueID != null) {
+            if (this.issueRepository.existsById(issueID)) {
 
-                validatedIssue = new Issue.Builder().copy(issue)
+                Issue issue = this.issueRepository.getOne(issueID);
 
-                        .setIsValidated(true)
-                        .build();
+                if (issue.getIsResolved() == true) {
 
-                this.issueRepository.update(validatedIssue);
-            }
+                    validatedIssue = new Issue.Builder().copy(issue)
+                            .setIsValidated(true)
+                            .build();
+
+                    this.issueRepository.save(validatedIssue);
+
+                }else return null;
+
+            } else return null;
 
         }catch (Exception e){
 
@@ -93,15 +87,16 @@ public class IssueServiceImpl implements IssueService {
     public Issue openIssue(String issueID) {
 
         Issue openedIssue = null;
-        Issue issue = this.issueRepository.read(issueID);
+        Issue issue = this.issueRepository.getOne(issueID);
 
         if( issue != null && issue.getIssueStatus() == false){
 
             openedIssue = new Issue.Builder().copy(issue)
                     .setIssueStatus(true)
+                    .setIssueRaisedDate(LocalDateTime.now())
                     .build();
 
-            this.issueRepository.update(openedIssue);
+            this.issueRepository.save(openedIssue);
         }
 
         return openedIssue;
@@ -111,15 +106,15 @@ public class IssueServiceImpl implements IssueService {
     public Issue closeIssue(String issueID) {
 
         Issue closedIssue = null;
-        Issue issue = this.issueRepository.read(issueID);
+        Issue issue = this.issueRepository.getOne(issueID);
 
-        if(issue.getIssueStatus() == true && issue.getIsValidated() == true){
+        if(issue.getIsValidated() == true){
 
             closedIssue = new Issue.Builder().copy(issue)
                     .setIssueStatus(false)
                     .build();
 
-            this.issueRepository.update(closedIssue);
+            this.issueRepository.save(closedIssue);
         }
 
         return closedIssue;
@@ -127,21 +122,29 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Issue create(Issue t) {
-        return this.issueRepository.create(t);
+        return this.issueRepository.save(t);
     }
 
     @Override
     public Issue read(String id) {
-        return this.issueRepository.read(id);
+        return this.issueRepository.findById(id).orElse(null);
     }
 
     @Override
     public Issue update(Issue t) {
-        return this.issueRepository.update(t);
+
+        if(this.issueRepository.existsById(t.getIssueID())) return this.issueRepository.save(t);
+           else return null;
+
     }
 
     @Override
     public boolean delete(String id) {
-        return this.issueRepository.delete(id);
+
+        this.issueRepository.deleteById(id);
+
+        if(this.issueRepository.existsById(id)) return false;
+        else return true;
+
     }
 }
