@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController // states that this class is a rest Controller containing end points
-@RequestMapping("/userAccount") // this is the base route for the userAccount controller
+@RequestMapping("/AuditSystem/userAccount") // this is the base route for the userAccount controller
 public class UserAccountController {
 
     // GetMapping -> return existing data to whoever calls the end point
