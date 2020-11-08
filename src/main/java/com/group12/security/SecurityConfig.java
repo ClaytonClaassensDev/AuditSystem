@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/AuditSystem/**/changePassword",
                         "/AuditSystem/**/updateEmailAddress",
                         "/AuditSystem/**/forgotPassword",
-                        "/AuditSystem/**/getUserAcccountViaEmailAddress",
+                        "/AuditSystem/**/getUserAccountViaEmailAddress",
                         "/AuditSystem/**/all"
                 ).hasRole(Admin_Role)
                 .antMatchers(HttpMethod.GET,"/AuditSystem/**/read/**",
