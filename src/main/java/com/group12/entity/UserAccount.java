@@ -1,7 +1,10 @@
 package com.group12.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /** Author: Rachael Klein
 *   Student no: 218 057 377
@@ -9,16 +12,19 @@ import java.time.LocalDate;
 *   Description: Entity for UserAccount
  */
 
-
+@Entity
 public class UserAccount implements Serializable
 {
+    @Id
     private String userId;
+
+
     private String email;
     private String password;
     private boolean loginStatus;
     private LocalDate registerDate;
 
-    private UserAccount(){}
+    protected UserAccount(){}
 
     //
     private UserAccount(Builder builder){
@@ -110,5 +116,18 @@ public class UserAccount implements Serializable
             return new UserAccount(this);
         }
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserAccount that = (UserAccount) o;
+        return userId.equals(that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
     }
 }

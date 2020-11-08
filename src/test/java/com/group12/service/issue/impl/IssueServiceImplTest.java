@@ -2,25 +2,24 @@ package com.group12.service.issue.impl;
 
 import com.group12.entity.Issue;
 import com.group12.factory.IssueFactory;
-import com.group12.repository.issue.IssueRepository;
 import com.group12.service.issue.IssueService;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 //This class is used to test the methods of the IssueServiceImpl.class
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class IssueServiceImplTest {
 
-    private static IssueService issueService = IssueServiceImpl.getInstance();
-    Issue issue = IssueFactory.createIssue("Safety", "Broken mirrors");
+    @Autowired
+    private IssueService issueService;
 
+    private static Issue issue = IssueFactory.createIssue("Safety", "Broken mirrors");
 
     @Test
     public void z_getAll() {
@@ -69,8 +68,8 @@ public class IssueServiceImplTest {
 
         System.out.println(e.getMessage());
         }
-
     }
+
 
     @Test
     public void h_validateIssue() {
@@ -130,8 +129,8 @@ public class IssueServiceImplTest {
 
         Issue expectedIssue = issueService.create(issue);
         Issue actualIssue = issueService.read(issue.getIssueID());
+        assertEquals(expectedIssue.getIssueID(), actualIssue.getIssueID());
 
-        assertEquals(expectedIssue, actualIssue);
         }catch (Exception e){
 
         System.out.println(e.getMessage());

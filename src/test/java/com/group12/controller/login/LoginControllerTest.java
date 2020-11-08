@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
  * Desc: Controller Test for login
  * Date: 22 September 2020
  */
+@Deprecated
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

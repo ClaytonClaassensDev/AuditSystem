@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * Desc: Value object for login
  * Date: 3 July 2020
  */
-
+@Deprecated
 public class Login
 {
     private String loginID;

@@ -3,12 +3,14 @@ package com.group12.service.ticket.impl;
 import com.group12.entity.Issue;
 import com.group12.entity.Ticket;
 import com.group12.repository.ticket.TicketRepository;
-import com.group12.repository.ticket.impl.TicketRepositoryImpl;
+
 import com.group12.service.ticket.TicketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
         * @author Stefano Ngantweni - 216283132
@@ -20,16 +22,48 @@ import java.util.Set;
 public class TicketServiceImpl implements TicketService {
 
     private static TicketService service = null;
+    @Autowired
     private TicketRepository repository;
 
-    private TicketServiceImpl(){
-        this.repository = TicketRepositoryImpl.getRepository();}
 
 
-    //to get the Service you want to work on
-    public static TicketService getService(){
-        if(service == null) service = new TicketServiceImpl();
-        return  service;
+
+
+
+    //CRUD
+    @Override
+    public Ticket create(Ticket t) {
+        return this.repository.save(t);
+    }
+
+    @Override
+    public Ticket read(String s) {
+        return this.repository.findById(s).orElse(null);
+    }
+
+    @Override
+    public Ticket update(Ticket t) {
+        if (this.repository.existsById(t.getTicketId())){
+            return this.repository.save(t);
+    }else {
+            return null;
+        }
+        }
+
+    @Override
+    public boolean delete(String s) {
+        this.repository.deleteById(s);
+        if(this.repository.existsById(s)) {
+            return false;
+        }else {
+            return true;
+        }
+
+    }
+
+    @Override
+    public Set<Ticket> getAll() {
+        return this.repository.findAll().stream().collect(Collectors.toSet());
     }
 
     /**
@@ -43,55 +77,28 @@ public class TicketServiceImpl implements TicketService {
         Ticket tcktSolved;
         Issue iss = ticket.getTicketIssue();
 
-            if (!(iss.getIssueStatus())) {
+        if (!(iss.getIssueStatus())) {
 
-                tcktSolved = new Ticket.Builder().copy(ticket).setTicketIssue(issSolved).build();
-                update(tcktSolved);
-                ticketClose = true;
-                System.out.println("Ticket has been closed");
-            }
-            return ticketClose;
+            tcktSolved = new Ticket.Builder().copy(ticket).setTicketIssue(issSolved).build();
+            update(tcktSolved);
+            ticketClose = true;
+            System.out.println("Ticket has been closed");
         }
+        return ticketClose;
+    }
 
 
     //Business Logic 2: When you want close a ticket when the issue has been resolved
     public Set<Ticket> getAllOpen(){
         Set<Ticket> openTick = new HashSet<>();
 
-        for(Ticket ticket: repository.getAll()) {
+        for(Ticket ticket: getAll()) {
             if (!ticket.getTicketIssue().getIssueStatus()) {
-                    openTick.add(ticket);
-                }
+                openTick.add(ticket);
+            }
         }
-            return openTick;
-        }
-
-
-
-    //CRUD
-    @Override
-    public Ticket create(Ticket t) {
-        return this.repository.create(t);
+        return openTick;
     }
 
-    @Override
-    public Ticket read(String s) {
-        return this.repository.read(s);
-    }
-
-    @Override
-    public Ticket update(Ticket t) {
-        return this.repository.update(t);
-    }
-
-    @Override
-    public boolean delete(String s) {
-        return this.repository.delete(s);
-    }
-
-    @Override
-    public Set<Ticket> getAll() {
-        return this.repository.getAll();
-    }
 }
 

@@ -1,4 +1,4 @@
-package com.group12.repository.department.impl;
+/*package com.group12.repository.department.impl;
 
 
 
@@ -12,7 +12,8 @@ import java.util.Set;
  * @author Enver Human - 216174929
  * Desc: Repository Implementation class for department
  * Date: 28 August 2020
- */
+ *//*
+
 
 
 
@@ -84,3 +85,4 @@ public class DepartmentRepositoryImpl implements DepartmentRepository {
         return this.departmentDB;
     }
 }
+*/

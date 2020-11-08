@@ -6,6 +6,10 @@ import com.group12.repository.report.ReportRepository;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -16,14 +20,16 @@ import static org.junit.Assert.*;
  */
 public class ReportRepositoryImplTest
 {
-    private static ReportRepository repository = ReportRepositoryImpl.getRepository();
+    @Autowired
+    private  ReportRepository repository;
+
     private static Report report = ReportFactory.createReport("Brian");
 
     // This test checks if a report object was added to the repository
     @Test
     public void a_create()
     {
-        Report created = repository.create(report);
+        Report created = repository.save(report);
         assertEquals(report.getReportId(), created.getReportId());
         System.out.println("Created: " + created);
     }
@@ -32,7 +38,7 @@ public class ReportRepositoryImplTest
     @Test
     public void b_read()
     {
-        Report read = repository.read(report.getReportId());
+        Report read = repository.findById(report.getReportId()).orElse(null);
         assertNotNull(read);
         System.out.println("Read: " + read);
     }
@@ -44,8 +50,8 @@ public class ReportRepositoryImplTest
         Report updated = new Report.Builder()
                 .copy(report).setReportAuth("Rebecca")
                 .build();
-        updated = repository.update(updated);
-        assertEquals("Rebecca", repository.read(report.getReportId()).getReportAuth());
+        updated = repository.save(updated);
+        assertEquals("Rebecca", repository.getOne(report.getReportId()).getReportAuth());
         System.out.println("Updated: " + updated);
     }
 
@@ -53,15 +59,15 @@ public class ReportRepositoryImplTest
     @Test
     public void e_delete()
     {
-        boolean deleted = repository.delete(report.getReportId());
-        assertTrue(deleted);
+        repository.deleteById(report.getReportId());
+        assertNull(repository.findById(report.getReportId()));
     }
 
     // This test checks to see if all the reports in the repository are returned
     @Test
     public void d_getAll()
     {
-        System.out.println("All Reports: " + repository.getAll());
-        assertEquals(1, repository.getAll().size());
+        System.out.println("All Reports: " + repository.findAll().stream().collect(Collectors.toSet()));
+        assertEquals(1, repository.findAll().size());
     }
 }
