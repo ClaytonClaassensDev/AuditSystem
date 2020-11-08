@@ -53,7 +53,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/AuditSystem/**/registerAccount"
                         )
                 .hasRole(User_Role)
+
+                .antMatchers(HttpMethod.PUT,
+                        "/**/issue/createIssue",
+                        "/**/issue/validateIssue",
+                        "/**/issue/openIssue",
+                        "/**/issue/closeIssue",
+                        "/**/issue/updateIssue"
+                ).hasRole(Admin_Role)
+
+                .antMatchers(HttpMethod.GET,
+                        "/**/issue/readIssue",
+                        "/**/issue/getAllIssues"
+                ).hasRole(Admin_Role)
+
+                .antMatchers(HttpMethod.DELETE,
+                        "/**/issue/deleteIssue"
+                ).hasRole(Admin_Role)
+
+                .antMatchers(HttpMethod.PUT,
+                        "/**/issue/resolveIssue"
+                ).hasRole(User_Role)
+
+                .antMatchers(HttpMethod.GET,
+                        "/**/issue/readIssue",
+                        "/**/issue/getAllIssues"
+                ).hasRole(User_Role)
                 .and().csrf().disable();
+
 
     }
 
