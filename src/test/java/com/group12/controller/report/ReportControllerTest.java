@@ -26,6 +26,8 @@ import static org.junit.Assert.*;
 public class ReportControllerTest
 {
     private static Report report = ReportFactory.createReport("Brian");
+    private static String SECURITY_UserName = "admin";
+    private static String SECURITY_Password = "password";
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -47,7 +49,9 @@ public class ReportControllerTest
     public void b_read()
     {
         String url = baseURL + "/read/" + report.getReportId();
-        ResponseEntity<Report> responseEntity = restTemplate.getForEntity(url, Report.class);
+        ResponseEntity<Report> responseEntity = restTemplate
+                .withBasicAuth(SECURITY_UserName,SECURITY_Password)
+                .getForEntity(url, Report.class);
         assertEquals(report.getReportId(), responseEntity.getBody().getReportId());
         System.out.println("URL: " + url);
         System.out.println("Body: " + responseEntity.getBody());
@@ -65,7 +69,6 @@ public class ReportControllerTest
     }
 
     @Test
-    @Ignore
     public void e_delete()
     {
         String url = baseURL + "/delete/" + report.getReportId();
@@ -80,7 +83,9 @@ public class ReportControllerTest
         String url = baseURL + "/all";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.withBasicAuth(SECURITY_UserName,SECURITY_Password)
+                .exchange(url, HttpMethod.GET, entity, String.class);
+        System.out.println(response);
         System.out.println(response.getBody());
     }
 }
