@@ -25,7 +25,7 @@ import java.util.Set;
 @Component
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/AuditSystem/department")
 public class DepartmentController {
 
 
