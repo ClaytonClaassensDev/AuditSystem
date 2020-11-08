@@ -6,6 +6,7 @@ import com.group12.service.account.UniversityStaffService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -18,7 +19,8 @@ import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//fixes methods to run in a sequence
 public class UniversityStaffServiceImplTest {
 
-    private static UniversityStaffService universityStaffService =  UniversityStaffServiceImpl.getUniversityStaffService();
+    @Autowired
+    private static UniversityStaffService universityStaffService;
     private static UniversityStaff universityStaff = UniversityStaffFactory.createUniversityStaff("Tools", "Umazelaphi", "0693852402"); // passes values as per sequence in the UniversityStaffFactory
 
 //the following methods are CRUD methods which all communicate with the repository which in tern communicates with the DB

@@ -33,7 +33,10 @@ public class FacultyControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private String baseURL = "http://localhost:8080/faculty/";
+    private String baseURL = "http://localhost:8080/AuditSystem/faculty/";
+
+    private static final String Admin_Username = "Boss";
+    private static final String Admin_Password = "123";
 
 
     @Test
@@ -48,9 +51,9 @@ public class FacultyControllerTest {
             Faculty accounting = FacultyFactory.createFaculty("Accounting");
             Faculty acting = FacultyFactory.createFaculty("Acting");
 
-            ResponseEntity<String> engPostRes = restTemplate.postForEntity(url, engineering, String.class);
-            ResponseEntity<String> accPostRes = restTemplate.postForEntity(url, accounting, String.class);
-            ResponseEntity<String> actPostRes = restTemplate.postForEntity(url, acting, String.class);
+            ResponseEntity<String> engPostRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).postForEntity(url, engineering, String.class);
+            ResponseEntity<String> accPostRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).postForEntity(url, accounting, String.class);
+            ResponseEntity<String> actPostRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).postForEntity(url, acting, String.class);
 
             Assert.assertEquals(200, engPostRes.getStatusCodeValue());
             System.out.println("");
@@ -67,7 +70,7 @@ public class FacultyControllerTest {
         System.out.println("GET ALL STARTING WITH");
 
         String url = baseURL + "getAllStartWith/Ac";
-        ResponseEntity<HashSet> getRes = restTemplate.getForEntity(url, HashSet.class);
+        ResponseEntity<HashSet> getRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).getForEntity(url, HashSet.class);
 
         Assert.assertEquals(200, getRes.getStatusCodeValue());
 
@@ -84,7 +87,7 @@ public class FacultyControllerTest {
         String name = "Acting";
         String url = baseURL + "getByName/" + name;
 
-        ResponseEntity<String> getRes = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<String> getRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).getForEntity(url, String.class);
 
         Assert.assertEquals(200, getRes.getStatusCodeValue());
 
@@ -100,7 +103,7 @@ public class FacultyControllerTest {
 
         String url = baseURL + "getById/" + id;
 
-        ResponseEntity<String> getRes = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<String> getRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).getForEntity(url, String.class);
 
         Assert.assertEquals(200, getRes.getStatusCodeValue());
 
@@ -113,7 +116,7 @@ public class FacultyControllerTest {
         System.out.println("UPDATE");
         String url = baseURL + "update";
 
-        Faculty accounting = restTemplate.getForEntity(baseURL + "getByName/Accounting", Faculty.class).getBody();
+        Faculty accounting = restTemplate.withBasicAuth(Admin_Username, Admin_Password).getForEntity(baseURL + "getByName/Accounting", Faculty.class).getBody();
 
         Faculty newAccounting = new Faculty
                 .Builder()
@@ -122,7 +125,7 @@ public class FacultyControllerTest {
                 .build();
 
         HttpEntity<Faculty> request = new HttpEntity<>(newAccounting, null);
-        ResponseEntity<Faculty> res = restTemplate.exchange(url, HttpMethod.PUT, request, Faculty.class);
+        ResponseEntity<Faculty> res = restTemplate.withBasicAuth(Admin_Username, Admin_Password).exchange(url, HttpMethod.PUT, request, Faculty.class);
 
         Assert.assertEquals(200, res.getStatusCodeValue());
 
@@ -134,10 +137,10 @@ public class FacultyControllerTest {
     public void g_delete() {
         System.out.println("DELETE");
 
-        String id = restTemplate.getForEntity(baseURL + "getByName/Engineering", Faculty.class).getBody().getFacultyId();
+        String id = restTemplate.withBasicAuth(Admin_Username, Admin_Password).getForEntity(baseURL + "getByName/Engineering", Faculty.class).getBody().getFacultyId();
         String url = baseURL + "delete/" + id;
 
-        ResponseEntity delRes = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
+        ResponseEntity delRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).exchange(url, HttpMethod.DELETE, null, boolean.class);
 
         Assert.assertEquals(200, delRes.getStatusCodeValue());
 
@@ -152,7 +155,7 @@ public class FacultyControllerTest {
         System.out.println("GET ALL");
         String url = baseURL + "getAll";
 
-        ResponseEntity<HashSet> getRes = restTemplate.getForEntity(url, HashSet.class);
+        ResponseEntity<HashSet> getRes = restTemplate.withBasicAuth(Admin_Username, Admin_Password).getForEntity(url, HashSet.class);
 
         Assert.assertEquals(200, getRes.getStatusCodeValue());
 

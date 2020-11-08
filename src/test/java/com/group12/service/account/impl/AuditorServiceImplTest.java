@@ -6,6 +6,7 @@ import com.group12.service.account.AuditorService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -17,7 +18,8 @@ import static org.junit.Assert.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)//fixes methods to run in a sequence
 public class AuditorServiceImplTest {
 
-    private static AuditorService auditorService =  AuditorServiceImpl.getAuditorService();
+    @Autowired
+    private static AuditorService auditorService;
     private static Auditor auditor = AuditorFactory.createAuditor("Lungz", "Kwana", "0656708902"); // passes values as per sequence in the AuditorFactory
 
     //the following methods are CRUD methods which all communicate with the repository which in tern communicates with the DB

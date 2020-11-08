@@ -6,6 +6,7 @@ package com.group12.controller.account;
 import com.group12.entity.Auditor;
 import com.group12.factory.AuditorFactory;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -28,7 +29,10 @@ public class AuditorControllerTest {
     @Autowired
     private TestRestTemplate restTemplate; // specifically used to test sping framework controllers
 
-    String baseUrl = "http://localhost:8080/auditor";
+    private  static final String Authenticate_Username ="Boss";
+    private static final String Authenticate_Password ="123";
+
+    String baseUrl = "http://localhost:8080/AuditSystem/auditor";
 
     private static Auditor auditor = AuditorFactory.createAuditor("Kwezi","Mali","0896542317");
 
@@ -36,7 +40,7 @@ public class AuditorControllerTest {
     @Test
     public void a_create() {
         String url = baseUrl+"/create";
-        ResponseEntity<Auditor> responseEntity = restTemplate.postForEntity(url,auditor,Auditor.class);
+        ResponseEntity<Auditor> responseEntity = restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).postForEntity(url,auditor,Auditor.class);
         System.out.println("Created: " + auditor);
         if (auditor!=responseEntity.getBody()){
             auditor = responseEntity.getBody(); // this is to ensure that the created auditor has the same attributes as the one provided by the response entity.
@@ -48,7 +52,7 @@ public class AuditorControllerTest {
     @Test
     public void b_read() {
         String url = baseUrl+"/read/"+auditor.getAuditorID();
-        ResponseEntity<Auditor> responseEntity = restTemplate.getForEntity(url,Auditor.class);
+        ResponseEntity<Auditor> responseEntity = restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).getForEntity(url,Auditor.class);
         assertEquals(auditor.getAuditorID(),responseEntity.getBody().getAuditorID());
         System.out.println("Auditor created: "+auditor.getAuditorID()+"\n"+"Auditor read: " + responseEntity.getBody().getAuditorID());
 
@@ -59,17 +63,18 @@ public class AuditorControllerTest {
         Auditor updatedAuditor = new Auditor.Builder().copy(auditor).setAuditorSurname("Bali").build();
         String url = baseUrl+"/update";
         HttpEntity<Auditor> auditorHttpEntity = new HttpEntity<>(updatedAuditor,null);
-        ResponseEntity<Auditor> responseUpdated = restTemplate.exchange(url,HttpMethod.PUT,auditorHttpEntity,Auditor.class);
+        ResponseEntity<Auditor> responseUpdated = restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).exchange(url,HttpMethod.PUT,auditorHttpEntity,Auditor.class);
         assertEquals(updatedAuditor.getAuditorSurname(),responseUpdated.getBody().getAuditorSurname());
         System.out.println("Auditor: "+updatedAuditor.getAuditorID()+"\n"+"Response from update: " + responseUpdated.getBody().getAuditorID());
 
     }
 
     @Test
+    @Ignore
     public void e_delete() {
         String url = baseUrl+"/delete/"+auditor.getAuditorID();
         System.out.println("Deleting user: " + url);
-        restTemplate.delete(url);
+        restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).delete(url);
         assertTrue("Deleted: "+auditor.getAuditorID(),true);
     }
 
@@ -78,7 +83,7 @@ public class AuditorControllerTest {
         String url = baseUrl+"/all";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> retrievingAll= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> retrievingAll= restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).exchange(url, HttpMethod.GET, entity, String.class);
         assertNotNull(retrievingAll);
         System.out.println("Auditor: "+auditor+"\n"+"Auditor on DB: " + retrievingAll.getBody());
 
