@@ -33,7 +33,7 @@ public class FacultyControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private String baseURL = "http://localhost:8080/faculty/";
+    private String baseURL = "http://localhost:8080/AuditSystem/faculty/";
 
     private static final String Admin_Username = "Boss";
     private static final String Admin_Password = "123";
