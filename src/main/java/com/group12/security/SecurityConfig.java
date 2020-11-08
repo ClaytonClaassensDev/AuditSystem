@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //find a particular end point for each role and who has access to them
         http.httpBasic().and().authorizeRequests()
-                .antMatchers(HttpMethod.POST,
+                .antMatchers(HttpMethod.POST, "/AuditSystem/**/create",
                         "/AuditSystem/**/delete",
                         "/AuditSystem/**/read",
                         "/AuditSystem/**/update",
