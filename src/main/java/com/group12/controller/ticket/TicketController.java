@@ -16,20 +16,11 @@ import java.util.Set;
 public class TicketController {
 
     @Autowired
-    TicketServiceImpl ticketService;
-    @Autowired
-    IssueServiceImpl IssueService;
-    Issue issue = IssueFactory.createIssue("Health","First Aid");//I create an Issue because I dont have the IssueController details yet
+    private TicketServiceImpl ticketService;
 
     @PostMapping("/create")
     public Ticket create(@RequestBody Ticket ticket){
-
-        //Issue issue = (ticket.getTicketIssue().getIssueID());// This will be used once I can use Issue class
-            Ticket newTick = null;
-            newTick = TicketFactory.createTicket(issue);
-
-            return ticketService.create(ticket);
-
+        return ticketService.create(ticket);
     }
 
     @GetMapping("/read/{id}")

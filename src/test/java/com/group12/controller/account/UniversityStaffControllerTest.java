@@ -7,6 +7,7 @@ package com.group12.controller.account;
 import com.group12.entity.UniversityStaff;
 import com.group12.factory.UniversityStaffFactory;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -28,7 +29,10 @@ public class UniversityStaffControllerTest {
     @Autowired
     private TestRestTemplate restTemplate; // specifically used to test sping framework controllers
 
-    String baseUrl = "http://localhost:8080/universityStaff";
+    private  static final String Authenticate_Username ="Client";
+    private static final String Authenticate_Password ="147";
+
+    String baseUrl = "http://localhost:8080/AuditSystem/universityStaff";
 
     private static UniversityStaff universityStaff = UniversityStaffFactory.createUniversityStaff("Ken","Soliman","0896097317");
 
@@ -36,7 +40,7 @@ public class UniversityStaffControllerTest {
     @Test
     public void a_create() {
         String url = baseUrl+"/create";
-        ResponseEntity<UniversityStaff> responseEntity = restTemplate.postForEntity(url, universityStaff,UniversityStaff.class);
+        ResponseEntity<UniversityStaff> responseEntity = restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).postForEntity(url, universityStaff,UniversityStaff.class);
         System.out.println("Created: " + universityStaff);
         if (universityStaff !=responseEntity.getBody()){
             universityStaff = responseEntity.getBody(); // this is to ensure that the created UniversityStaff has the same attributes as the one provided by the response entity.
@@ -48,7 +52,7 @@ public class UniversityStaffControllerTest {
     @Test
     public void b_read() {
         String url = baseUrl+"/read/"+ universityStaff.getUniversityStaffID();
-        ResponseEntity<UniversityStaff> responseEntity = restTemplate.getForEntity(url,UniversityStaff.class);
+        ResponseEntity<UniversityStaff> responseEntity = restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).getForEntity(url,UniversityStaff.class);
         assertEquals(universityStaff.getUniversityStaffID(),responseEntity.getBody().getUniversityStaffID());
         System.out.println("UniversityStaff created: "+ universityStaff.getUniversityStaffID()+"\n"+"UniversityStaff read: " + responseEntity.getBody().getUniversityStaffID());
 
@@ -59,17 +63,18 @@ public class UniversityStaffControllerTest {
         UniversityStaff updatedUniversityStaff = new UniversityStaff.Builder().copy(universityStaff).setUniversityStaffSurname("Khan").build();
         String url = baseUrl+"/update";
         HttpEntity<UniversityStaff> universityStaffHttpEntity = new HttpEntity<>(updatedUniversityStaff,null);
-        ResponseEntity<UniversityStaff> responseUpdated = restTemplate.exchange(url, HttpMethod.PUT,universityStaffHttpEntity,UniversityStaff.class);
+        ResponseEntity<UniversityStaff> responseUpdated = restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).exchange(url, HttpMethod.PUT,universityStaffHttpEntity,UniversityStaff.class);
         assertEquals(updatedUniversityStaff.getUniversityStaffSurname(),responseUpdated.getBody().getUniversityStaffSurname());
         System.out.println("UniversityStaff: "+updatedUniversityStaff.getUniversityStaffID()+"\n"+"Response from update: " + responseUpdated.getBody().getUniversityStaffID());
 
     }
 
     @Test
+    @Ignore
     public void e_delete() {
         String url = baseUrl+"/delete/"+ universityStaff.getUniversityStaffID();
         System.out.println("Deleting user: " + url);
-        restTemplate.delete(url);
+        restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).delete(url);
         assertTrue("Deleted: "+ universityStaff.getUniversityStaffID(),true);
     }
 
@@ -78,7 +83,7 @@ public class UniversityStaffControllerTest {
         String url = baseUrl+"/all";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> retrievingAll= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> retrievingAll= restTemplate.withBasicAuth(Authenticate_Username,Authenticate_Password).exchange(url, HttpMethod.GET, entity, String.class);
         assertNotNull(retrievingAll);
         System.out.println("UniversityStaff: "+ universityStaff +"\n"+"UniversityStaff on DB: " + retrievingAll.getBody());
 

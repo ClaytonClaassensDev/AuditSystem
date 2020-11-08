@@ -17,7 +17,7 @@ import java.util.Set;
 
 
 @RestController
-@RequestMapping("/faculty")
+@RequestMapping("/AuditSystem/faculty")
 public class FacultyController {
 
     @Autowired

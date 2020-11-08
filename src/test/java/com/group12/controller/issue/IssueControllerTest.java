@@ -25,6 +25,10 @@ public class IssueControllerTest {
 
     String url = "http://localhost:8080/issue";
 
+    //admin can do everything
+    private static final String Admin_Username = "Boss";
+    private static final String Admin_Password = "123";
+
 
     ResponseEntity<Issue> issue = null;
 
@@ -42,7 +46,9 @@ public class IssueControllerTest {
         try{
 
             Issue createIssue = IssueFactory.createIssue("Area Of New Issue","Description of New Issue");
-            ResponseEntity<Issue> expectedIssue = restTemplate.postForEntity(url+"/createIssue", createIssue,Issue.class);
+            ResponseEntity<Issue> expectedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                    .postForEntity(url+"/createIssue", createIssue,Issue.class);
+
             System.out.printf(expectedIssue.getBody()+ "\n");
 
             String issueArea = expectedIssue.getBody().getIssueArea();
@@ -68,7 +74,8 @@ public class IssueControllerTest {
         setup();
         String urlRead = url+"/readIssue?issueID="+issue.getBody().getIssueID();
 
-        ResponseEntity<Issue> responseIssue = restTemplate.getForEntity(urlRead, Issue.class);
+        ResponseEntity<Issue> responseIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlRead, Issue.class);
 
         System.out.printf(responseIssue.getBody().toString()+"\n");
 
@@ -84,16 +91,19 @@ public class IssueControllerTest {
         String urlUpdate = url+"/updateIssue";
 
         Issue issueToUpdate = IssueFactory.createIssue("IssueToUpdateArea","IssueToUpdateDescription");
-        ResponseEntity<Issue> updateIssue = restTemplate.postForEntity(url+"/createIssue", issueToUpdate,Issue.class);
+        ResponseEntity<Issue> updateIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .postForEntity(url+"/createIssue", issueToUpdate,Issue.class);
 
         Issue updatedIssue = new Issue.Builder().copy(updateIssue.getBody())
                 .setIsResolved(true)
                 .build();
 
         HttpEntity<Issue> issueHttpEntity = new HttpEntity<Issue>(updatedIssue, null);
-        restTemplate.exchange(urlUpdate, HttpMethod.PUT, issueHttpEntity, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .exchange(urlUpdate, HttpMethod.PUT, issueHttpEntity, Issue.class);
 
-        ResponseEntity<Issue> updatedIssueResponse = restTemplate.getForEntity(url+"/readIssue?issueID="+issueHttpEntity.getBody().getIssueID(), Issue.class);
+        ResponseEntity<Issue> updatedIssueResponse = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(url+"/readIssue?issueID="+issueHttpEntity.getBody().getIssueID(), Issue.class);
 
         System.out.printf(issueHttpEntity.toString()+"\n");
         System.out.printf(updatedIssue.toString()+"\n");
@@ -110,7 +120,8 @@ public class IssueControllerTest {
 
         Issue issueToDelete = IssueFactory.createIssue("IssueToDeleteArea","IssueToDeleteDescription");
 
-        ResponseEntity<Issue> expectedIssue = restTemplate.postForEntity(url+"/createIssue", issueToDelete,Issue.class);
+        ResponseEntity<Issue> expectedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .postForEntity(url+"/createIssue", issueToDelete,Issue.class);
 
         String issueID = expectedIssue.getBody().getIssueID();
 
@@ -118,7 +129,8 @@ public class IssueControllerTest {
 
         String urlDelete = url+"/deleteIssue?issueID="+issueID;
 
-        ResponseEntity<Boolean> isDeleted = restTemplate.exchange(urlDelete, HttpMethod.DELETE,null , boolean.class);
+        ResponseEntity<Boolean> isDeleted = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .exchange(urlDelete, HttpMethod.DELETE,null , boolean.class);
 
         System.out.printf(isDeleted.getStatusCode()+"\n"+isDeleted.getBody());
 
@@ -134,7 +146,8 @@ public class IssueControllerTest {
 
         String urlRead = url+"/readIssue?issueID="+issue.getBody().getIssueID();
 
-        ResponseEntity<Issue> responseIssue = restTemplate.getForEntity(urlRead, Issue.class);
+        ResponseEntity<Issue> responseIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlRead, Issue.class);
 
         System.out.printf(responseIssue.toString()+"\n");
 
@@ -142,9 +155,11 @@ public class IssueControllerTest {
 
         String urlResolve = url+"/resolveIssue?issueID="+responseIssue.getBody().getIssueID();
 
-        restTemplate.put(urlResolve, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .put(urlResolve, Issue.class);
 
-        ResponseEntity<Issue> returnedIssue = restTemplate.getForEntity(urlRead, Issue.class);
+        ResponseEntity<Issue> returnedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlRead, Issue.class);
 
         System.out.printf(returnedIssue.toString());
 
@@ -159,17 +174,21 @@ public class IssueControllerTest {
 
         String urlResolve = url+"/resolveIssue?issueID="+issue.getBody().getIssueID();
 
-        restTemplate.put(urlResolve, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .put(urlResolve, Issue.class);
 
         String urlRead = url+"/readIssue?issueID="+issue.getBody().getIssueID();
 
-        ResponseEntity<Issue> returnedIssue = restTemplate.getForEntity(urlRead, Issue.class);
+        ResponseEntity<Issue> returnedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlRead, Issue.class);
 
         String urlValidate = url+"/validateIssue?issueID="+returnedIssue.getBody().getIssueID();
 
-        restTemplate.put(urlValidate, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .put(urlValidate, Issue.class);
 
-        ResponseEntity<Issue> validatedIssue = restTemplate.getForEntity(urlRead, Issue.class);
+        ResponseEntity<Issue> validatedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlRead, Issue.class);
 
         System.out.printf(validatedIssue.toString());
 
@@ -185,18 +204,22 @@ public class IssueControllerTest {
 
         //setting issueStatus to false/closed
         String urlCloseIssue = url+"/closeIssue?issueID="+issue.getBody().getIssueID();
-        restTemplate.getForEntity(urlCloseIssue, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlCloseIssue, Issue.class);
 
-        ResponseEntity<Issue> readClosedIssue = restTemplate.getForEntity(url+"/readIssue?issueID="+issue.getBody().getIssueID(), Issue.class);
+        ResponseEntity<Issue> readClosedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(url+"/readIssue?issueID="+issue.getBody().getIssueID(), Issue.class);
 
         System.out.printf(readClosedIssue.getBody().toString());
 
         //this is the endpoint to test
         String urlOpenIssue = url+"/openIssue?issueID="+readClosedIssue.getBody().getIssueID();
 
-        restTemplate.getForEntity(urlOpenIssue, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlOpenIssue, Issue.class);
 
-        ResponseEntity<Issue> issueResponseEntity = restTemplate.getForEntity(url+"/readIssue?issueID="+readClosedIssue.getBody().getIssueID(), Issue.class);
+        ResponseEntity<Issue> issueResponseEntity = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(url+"/readIssue?issueID="+readClosedIssue.getBody().getIssueID(), Issue.class);
 
 
         System.out.printf(issueResponseEntity.getBody().toString()+"\n");
@@ -217,12 +240,16 @@ public class IssueControllerTest {
         String urlValidate = url+"/validateIssue?issueID="+issue.getBody().getIssueID();
         String urlClose = url+"/closeIssue?issueID="+issue.getBody().getIssueID();
 
-        restTemplate.put(urlResolve, Issue.class);
-        restTemplate.put(urlValidate, Issue.class);
-        restTemplate.put(urlClose, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .put(urlResolve, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .put(urlValidate, Issue.class);
+        restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .put(urlClose, Issue.class);
 
         String urlRead = url+"/readIssue?issueID="+issue.getBody().getIssueID();
-        ResponseEntity<Issue> returnedIssue = restTemplate.getForEntity(urlRead, Issue.class);
+        ResponseEntity<Issue> returnedIssue = restTemplate.withBasicAuth(Admin_Username, Admin_Password)
+                .getForEntity(urlRead, Issue.class);
 
         System.out.printf(returnedIssue.toString());
 
@@ -238,7 +265,8 @@ public class IssueControllerTest {
 
         String urlGetAllIssues = url+"/getAllIssues";
 
-        ResponseEntity<Set> setResponseEntity = restTemplate.getForEntity(urlGetAllIssues, Set.class);
+        ResponseEntity<Set> setResponseEntity = restTemplate
+                .withBasicAuth(Admin_Username, Admin_Password).getForEntity(urlGetAllIssues, Set.class);
 
         System.out.printf(setResponseEntity.getBody().size()+"");
 
