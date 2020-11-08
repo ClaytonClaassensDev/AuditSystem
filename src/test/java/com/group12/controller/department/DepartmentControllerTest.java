@@ -34,13 +34,19 @@ import static org.junit.Assert.assertNotNull;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DepartmentControllerTest {
 
+
+    private static String USERNAME = "Client";
+    private static String PASSWORD = "147";
+
+
+
     @Autowired
     private TestRestTemplate restTemplate;
 
     private String baseURL = "http://localhost:8080/department";
 
-   private Department department = DepartmentFactory.createDepartment("MultimediaTechnology");
-   private Department electricalEngineering = DepartmentFactory.createDepartment("ElectricalEngineering");
+    private Department department = DepartmentFactory.createDepartment("MultimediaTechnology");
+    private Department electricalEngineering = DepartmentFactory.createDepartment("ElectricalEngineering");
 
 
     @Test
@@ -54,8 +60,8 @@ public class DepartmentControllerTest {
 
 
 
-            ResponseEntity<String> engPostRes = restTemplate.postForEntity(url, department, String.class);
-            ResponseEntity<String> accPostRes = restTemplate.postForEntity(url, electricalEngineering, String.class);
+            ResponseEntity<String> engPostRes = restTemplate.withBasicAuth(USERNAME, PASSWORD).postForEntity(url, department, String.class);
+            ResponseEntity<String> accPostRes = restTemplate.withBasicAuth(USERNAME, PASSWORD).postForEntity(url, electricalEngineering, String.class);
 
 
             assertEquals(200, engPostRes.getStatusCodeValue());
@@ -73,14 +79,14 @@ public class DepartmentControllerTest {
 
             String urlRead = baseURL+"/readDepartment?departmentID="+department.getDepid();
 
-            ResponseEntity<Department> responseDepartment = restTemplate.getForEntity(urlRead, Department.class);
+            ResponseEntity<Department> responseDepartment = restTemplate.withBasicAuth(USERNAME, PASSWORD).getForEntity(urlRead, Department.class);
 
             System.out.printf(responseDepartment.getBody().toString()+"\n");
             System.out.println(responseDepartment.getBody().getDepName());
 
             assertNotNull(responseDepartment);
-           // assertEquals(responseDepartment.getStatusCode(), HttpStatus.OK);
-           // assertEquals(department.getDepid(), responseDepartment.getBody().getDepid());
+            // assertEquals(responseDepartment.getStatusCode(), HttpStatus.OK);
+            // assertEquals(department.getDepid(), responseDepartment.getBody().getDepid());
 
 
         }catch(Exception e)
@@ -107,7 +113,7 @@ public class DepartmentControllerTest {
                 .build();
 
         HttpEntity<Department> request = new HttpEntity<>(newElectricalEngineering, null);
-        ResponseEntity<Department> res = restTemplate.exchange(url, HttpMethod.PUT, request, Department.class);
+        ResponseEntity<Department> res = restTemplate.withBasicAuth(USERNAME, PASSWORD).exchange(url, HttpMethod.PUT, request, Department.class);
 
         System.out.println(res.getBody());
         System.out.println("");
@@ -117,11 +123,11 @@ public class DepartmentControllerTest {
     public void d_delete() {
 
 
-        String id = restTemplate.getForEntity(baseURL + "/getById/"+department.getDepid(), Department.class).getBody().getDepid();
+        String id = restTemplate.withBasicAuth(USERNAME, PASSWORD).getForEntity(baseURL + "/getById/"+department.getDepid(), Department.class).getBody().getDepid();
         System.out.println(id);
         String url = baseURL + "/delete?" + department.getDepid();
 
-        ResponseEntity delRes = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
+        ResponseEntity delRes = restTemplate.withBasicAuth(USERNAME, PASSWORD).exchange(url, HttpMethod.DELETE, null, boolean.class);
 
         System.out.println(delRes.getBody());
         System.out.println("");
@@ -134,7 +140,7 @@ public class DepartmentControllerTest {
 
         String url = baseURL + "/getAll";
 
-        ResponseEntity<HashSet> getRes = restTemplate.getForEntity(url, HashSet.class);
+        ResponseEntity<HashSet> getRes = restTemplate.withBasicAuth(USERNAME, PASSWORD).getForEntity(url, HashSet.class);
 
         for (Object department: getRes.getBody()){
             System.out.println(department);
