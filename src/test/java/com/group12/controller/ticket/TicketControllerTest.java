@@ -27,19 +27,22 @@ import static org.junit.Assert.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT )
 @RunWith(SpringRunner.class)
 public class TicketControllerTest {
+    private static Issue issue = IssueFactory.createIssue("Health","First Aid");
+    private static Ticket ticket= TicketFactory.createTicket(issue);
+
+    private static String USERNAME = "Boss";
+    private static String PASSWORD = "123";
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private static String baseURL = "http://localhost:8083/ticket/";
-    Issue issue = IssueFactory.createIssue("Health","First Aid");
+    private static String baseURL = "http://localhost:8080/ticket/";
+
     @Test
     public void a_create() {
-
-        Ticket ticket= TicketFactory.createTicket(issue);
         String url = baseURL + "create";
 
-        ResponseEntity<Ticket> postResponse = restTemplate.postForEntity(url, ticket, Ticket.class);
+        ResponseEntity<Ticket> postResponse = restTemplate.withBasicAuth(USERNAME,PASSWORD).postForEntity(url, ticket, Ticket.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
         System.out.println(postResponse.getBody());
@@ -47,18 +50,17 @@ public class TicketControllerTest {
 
     @Test
     public void b_read() {
-        Ticket ticket = TicketFactory.createTicket(issue);
-
-        String url = baseURL + "read?id=" +  ticket.getTicketId();
+        String url = baseURL + "read/" +  ticket.getTicketId();
         System.out.println("URL: " + url);
-        ResponseEntity<Ticket> TickResponse = restTemplate.getForEntity(url, Ticket.class);
+        ResponseEntity<Ticket> TickResponse = restTemplate.withBasicAuth(USERNAME,PASSWORD).withBasicAuth(USERNAME,PASSWORD).getForEntity(url, Ticket.class);
         assertNotNull(ticket.getTicketId());
+        System.out.println(TickResponse.getBody());
+
 
     }
 
     @Test
     public void c_update() {
-        Ticket ticket = TicketFactory.createTicket(issue);
 
         Issue updatedIss = new Issue.Builder().copy(issue).setIsResolved(true).build();
         Ticket updated = new Ticket.Builder().copy(ticket).setTicketIssue(updatedIss).build();
@@ -66,9 +68,9 @@ public class TicketControllerTest {
         System.out.println("URL: " + url);
         System.out.println("Put data: " + updated);
         HttpEntity<Ticket> httpsEntityTicket = new HttpEntity<Ticket>(updated, null);
-        ResponseEntity<Ticket> updateResponse = restTemplate.exchange(url, HttpMethod.PUT, httpsEntityTicket, Ticket.class);
-        assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
-        assertNotNull(updated.getTicketIssue().getIsResolved());
+        ResponseEntity<Ticket> updateResponse = restTemplate.withBasicAuth(USERNAME,PASSWORD).exchange(url, HttpMethod.PUT, httpsEntityTicket, Ticket.class);
+        assertEquals( HttpStatus.OK, updateResponse.getStatusCode());
+        //assertNotNull(updated.getTicketIssue().getIsResolved());
     }
 
     @Test
@@ -76,19 +78,18 @@ public class TicketControllerTest {
         String url = baseURL + "all";
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response= restTemplate.withBasicAuth(USERNAME,PASSWORD).exchange(url, HttpMethod.GET, entity, String.class);
         System.out.println(response);
         System.out.println(response.getBody());
     }
 
     @Test
     public void g_delete() {
-        Ticket ticket = TicketFactory.createTicket(issue);
-        String url = baseURL + "delete?id=" + ticket.getTicketId();
+
+        String url = baseURL + "delete/" + ticket.getTicketId();
         System.out.println("URL: " + url);
-        ResponseEntity updateResponse = restTemplate.exchange(url, HttpMethod.DELETE, null, boolean.class);
+        ResponseEntity updateResponse = restTemplate.withBasicAuth(USERNAME,PASSWORD).exchange(url, HttpMethod.DELETE, null, boolean.class);
         assertEquals(updateResponse.getStatusCode(), HttpStatus.OK);
-        assertTrue((boolean)updateResponse.getBody());
     }
 
     @Test

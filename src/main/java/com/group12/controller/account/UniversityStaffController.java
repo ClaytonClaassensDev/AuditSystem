@@ -14,7 +14,7 @@ import java.util.Set;
  */
 
 @RestController
-@RequestMapping("/universityStaff") // class will be listening to requests through this path
+@RequestMapping("/AuditSystem/universityStaff") // class will be listening to requests through this path
 public class UniversityStaffController {
     @Autowired
     // injecting the object of UniversityStaff services into controllers so it can be manipulated over internet requests
